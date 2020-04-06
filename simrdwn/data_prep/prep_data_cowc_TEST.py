@@ -40,7 +40,7 @@ verbose = True
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
 label_path_root = '/simrdwn/data/train_data'
-train_out_dir = '/simrdwn/data/train_data/cowc'
+train_out_dir = '/simrdwn/data/train_data/cowc_TEST'
 test_out_dir = '/simrdwn/data/test_images/cowc'
 
 
@@ -63,8 +63,8 @@ print ("label_map_path:", label_map_path)
 # for now skip Columbus and Vahingen since they are grayscale
 # os.path.join(args.cowc_data_dir, 'datasets/ground_truth_sets/')
 ground_truth_dir = cowc_data_dir
-train_dirs = ['Potsdam_ISPRS', 'Selwyn_LINZ', 'Toronto_ISPRS']
-test_dirs = ['Utah_AGRC']
+train_dirs = ['TEST']
+test_dirs = []
 annotation_suffix = '_Annotated_Cars.png'
 ##############################
 
@@ -96,7 +96,7 @@ print("yolt_box_size (pixels):", yolt_box_size)
 # slicing variables
 slice_overlap = 0.1
 zero_frac_thresh = 0.2
-sliceHeight, sliceWidth = 416, 416  # for for 82m windows
+sliceHeight, sliceWidth = 1500, 1500  # for for 82m windows
 ##############################
 
 ##############################

@@ -541,6 +541,8 @@ def refine_df(df, groupby='Image_Path',
                     else:
                         probs = []
                     # _, _, good_idxs = non_max_suppression(
+                    print('1st filter ' + img_loc_string)
+                    print(len(boxes))
                     good_idxs = non_max_suppression(
                         boxes_nms_input, probs=probs,
                         overlapThresh=nms_overlap_thresh)
@@ -606,6 +608,7 @@ def refine_df(df, groupby='Image_Path',
                 else:
                     probs = []
                 # _, _, good_idxs = non_max_suppression(
+                print('2nd filter ' + img_loc_string)
                 good_idxs = non_max_suppression(
                     boxes_nms_input, probs=probs,
                     overlapThresh=nms_overlap_thresh)

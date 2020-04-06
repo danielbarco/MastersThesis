@@ -33,18 +33,18 @@ import preprocess_tfrecords
 # path variables (may need to be edited! )
 
 # gpu07
-cowc_data_dir = './simrdwn/data/ground_truth_sets'
-label_map_file = 'class_labels_car.pbtxt'
+cowc_data_dir = './simrdwn/data/ground_truth_set_apizoom'
+label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
 label_path_root = '/simrdwn/data/train_data'
-train_out_dir = '/simrdwn/data/train_data/cowc'
-test_out_dir = '/simrdwn/data/test_images/cowc'
+train_out_dir = '/simrdwn/data/train_data/apizoom_416'
+test_out_dir = '/simrdwn/data/test_images/apizoom_416'
 
 
-# at /cosmiq
+# at /cosmiqyx                          
 # simrdwn_data_dir = '/cosmiq/src/simrdwn3/data/train_data'
 # label_path_root = '/cosmiq/src/simrdwn3/data/train_data'
 # train_out_dir = '/cosmiq/src/simrdwn3/data/train_data/cowc'
@@ -63,17 +63,17 @@ print ("label_map_path:", label_map_path)
 # for now skip Columbus and Vahingen since they are grayscale
 # os.path.join(args.cowc_data_dir, 'datasets/ground_truth_sets/')
 ground_truth_dir = cowc_data_dir
-train_dirs = ['Potsdam_ISPRS', 'Selwyn_LINZ', 'Toronto_ISPRS']
-test_dirs = ['Utah_AGRC']
-annotation_suffix = '_Annotated_Cars.png'
+train_dirs = ['train']
+test_dirs = ['test']
+annotation_suffix = '_Annotated.png'
 ##############################
 
 ##############################
 # infer training output paths
 labels_dir = os.path.join(train_out_dir, 'labels/')
 images_dir = os.path.join(train_out_dir, 'images/')
-im_list_name = os.path.join(train_out_dir, 'cowc_yolt_train_list.txt')
-tfrecord_train = os.path.join(train_out_dir, 'cowc_train.tfrecord')
+im_list_name = os.path.join(train_out_dir, 'apizoom_416_train_list.txt')
+tfrecord_train = os.path.join(train_out_dir, 'apizoom_416_train.tfrecord')
 sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
 # train_images_list_file_loc = yolt_dir + 'data/'
@@ -88,7 +88,8 @@ for d in [train_out_dir, test_out_dir, labels_dir, images_dir]:
 # set yolt training box size
 car_size = 3      # meters
 GSD = 0.15        # meters
-yolt_box_size = np.rint(car_size/GSD)  # size in pixels
+##yolt_box_size = np.rint(car_size/GSD)  # size in pixels
+yolt_box_size = 34
 print("yolt_box_size (pixels):", yolt_box_size)
 ##############################
 
@@ -141,7 +142,7 @@ for i, d in enumerate(train_dirs):
     for annotate_file in annotate_files:
         annotate_file_tot = os.path.join(dtot, annotate_file)
         name_root = annotate_file.split(annotation_suffix)[0]
-        imfile = name_root + '.png'
+        imfile = name_root + '.jpg'
         imfile_tot = os.path.join(dtot, imfile)
         outroot = d + '_' + imfile.split('.')[0]
         print("\nName_root", name_root)

@@ -33,15 +33,15 @@ import preprocess_tfrecords
 # path variables (may need to be edited! )
 
 # gpu07
-cowc_data_dir = './simrdwn/data/ground_truth_sets'
-label_map_file = 'class_labels_car.pbtxt'
+cowc_data_dir = './simrdwn/data/ApiZoom_ground_truth'
+label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
 label_path_root = '/simrdwn/data/train_data'
-train_out_dir = '/simrdwn/data/train_data/cowc'
-test_out_dir = '/simrdwn/data/test_images/cowc'
+train_out_dir = '/simrdwn/data/train_data/apizoom_416'
+test_out_dir = '/simrdwn/data/test_images/apizoom_416'
 
 
 # at /cosmiq
@@ -63,17 +63,17 @@ print ("label_map_path:", label_map_path)
 # for now skip Columbus and Vahingen since they are grayscale
 # os.path.join(args.cowc_data_dir, 'datasets/ground_truth_sets/')
 ground_truth_dir = cowc_data_dir
-train_dirs = ['Potsdam_ISPRS', 'Selwyn_LINZ', 'Toronto_ISPRS']
-test_dirs = ['Utah_AGRC']
-annotation_suffix = '_Annotated_Cars.png'
+train_dirs = ['train_images']
+test_dirs = ['test_images']
+annotation_suffix = '32px'
 ##############################
 
 ##############################
 # infer training output paths
 labels_dir = os.path.join(train_out_dir, 'labels/')
 images_dir = os.path.join(train_out_dir, 'images/')
-im_list_name = os.path.join(train_out_dir, 'cowc_yolt_train_list.txt')
-tfrecord_train = os.path.join(train_out_dir, 'cowc_train.tfrecord')
+im_list_name = os.path.join(train_out_dir, 'api_zoom_train_list.txt')
+tfrecord_train = os.path.join(train_out_dir, 'apizoom416_train.tfrecord')
 sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
 # train_images_list_file_loc = yolt_dir + 'data/'
@@ -206,7 +206,7 @@ for td in test_dirs:
         os.makedirs(td_tot_out)
     # copy non-label files
     for f in os.listdir(td_tot_in):
-        if f.endswith('.png') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
+        if f.endswith('.jpg') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
             shutil.copy2(os.path.join(td_tot_in, f), td_tot_out)
     # copy everything?
     #os.system('cp -r ' + td_tot + ' ' + test_out_dir)
