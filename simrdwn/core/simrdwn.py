@@ -1018,7 +1018,7 @@ def run_test(framework='YOLT2',
              rotate_boxes=False,
              min_retain_prob=0.05,
              test_add_geo_coords=True,
-             verbose=False
+             verbose=True
              ):
     """Evaluate multiple large images"""
 

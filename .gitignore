@@ -3,4 +3,7 @@ _extras/
 notes/
 .DS_Store
 __pycache__/
-.weights
+*.weights
+*.zip
+data/
+results/
