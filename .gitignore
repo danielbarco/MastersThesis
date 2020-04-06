@@ -5,4 +5,4 @@ notes/
 __pycache__/
 .weights
 data/
-*.o
+results/
