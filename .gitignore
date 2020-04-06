@@ -4,3 +4,5 @@ notes/
 .DS_Store
 __pycache__/
 .weights
+data/
+*.o
