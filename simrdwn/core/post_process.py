@@ -543,19 +543,21 @@ def refine_df(df, groupby='Image_Path',
                     # _, _, good_idxs = non_max_suppression(
                     print('1st filter ' + img_loc_string)
                     print(len(boxes))
-                    good_idxs = non_max_suppression(
-                        boxes_nms_input, probs=probs,
-                        overlapThresh=nms_overlap_thresh)
+                    ## This if statement is a hack
+                    if len(boxes) > 0:
+                        good_idxs = non_max_suppression(
+                            boxes_nms_input, probs=probs,
+                            overlapThresh=nms_overlap_thresh)
 
-                    if verbose:
-                        print("num boxes_all:", len(xmins))
-                        print("num good_idxs:", len(good_idxs))
-                    if len(boxes) == 0:
-                        print("Error, No boxes detected!")
-                    boxes = boxes[good_idxs]
-                    scores = scores[good_idxs]
-                    df_idxs = df_idxs[good_idxs]
-                    #classes = classes_str[good_idxs]
+                        if verbose:
+                            print("num boxes_all:", len(xmins))
+                            print("num good_idxs:", len(good_idxs))
+                        if len(boxes) == 0:
+                            print("Error, No boxes detected!")
+                        boxes = boxes[good_idxs]
+                        scores = scores[good_idxs]
+                        df_idxs = df_idxs[good_idxs]
+                        #classes = classes_str[good_idxs]
 
                 df_idxs_tot.extend(df_idxs)
                 count += len(df_idxs)
