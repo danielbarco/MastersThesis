@@ -95,7 +95,7 @@ print("yolt_box_size (pixels):", yolt_box_size)
 
 ##############################
 # slicing variables
-slice_overlap = 0.1
+slice_overlap = 0.2
 zero_frac_thresh = 0.2
 sliceHeight, sliceWidth = 208, 208  # for for 82m windows
 ##############################
