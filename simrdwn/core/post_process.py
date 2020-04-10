@@ -541,26 +541,33 @@ def refine_df(df, groupby='Image_Path',
                     else:
                         probs = []
                     # _, _, good_idxs = non_max_suppression(
-                    print('1st filter ' + img_loc_string)
-                    print(len(boxes))
-                    ## This if statement is a hack
-                    if len(boxes) > 0:
-                        good_idxs = non_max_suppression(
-                            boxes_nms_input, probs=probs,
-                            overlapThresh=nms_overlap_thresh)
 
-                        if verbose:
-                            print("num boxes_all:", len(xmins))
-                            print("num good_idxs:", len(good_idxs))
-                        if len(boxes) == 0:
-                            print("Error, No boxes detected!")
+                    ## This if statement is a hack
+                    ## DID NOT WORK
+                    ##if len(boxes) > 0:
+                        
+                    good_idxs = non_max_suppression(
+                        boxes_nms_input, probs=probs,
+                        overlapThresh=nms_overlap_thresh)
+                    print('1st filter ' + img_loc_string)
+                    print('length boxes: ' + str(len(boxes)) + ' shape boxes: ' + str(boxes.shape) + ' boxes: ' + str(boxes))
+                    print('length good_idxs: ' + str(len(good_idxs)) + ' good_idx: ' + str(good_idxs))
+
+                    if verbose:
+                        print("num boxes_all:", len(xmins))
+                        print("num good_idxs:", len(good_idxs))
+                    if len(boxes) == 0:
+                        print("Error, No boxes detected!")
+                    print('lenght scores: ' + str(len(scores)) + ' shape scores: ' + str(scores.shape) + ' scores: ' + str(scores))
+                    print('lenght df_idxs: ' + str(len(df_idxs)) + ' shape df_idxs: ' + str(df_idxs.shape) + ' df_idxs: ' + str(df_idxs))
+                    if len(boxes) > 0:
                         boxes = boxes[good_idxs]
                         scores = scores[good_idxs]
                         df_idxs = df_idxs[good_idxs]
-                        #classes = classes_str[good_idxs]
-
-                df_idxs_tot.extend(df_idxs)
-                count += len(df_idxs)
+                    #classes = classes_str[good_idxs]
+                if len(boxes) > 0:
+                    df_idxs_tot.extend(df_idxs)
+                    count += len(df_idxs)
 
         # no secondary filter
         else:
