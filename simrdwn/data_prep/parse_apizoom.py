@@ -297,7 +297,7 @@ def slice_im_apizoom(input_im, #input_mask,
             else:
                 x0 = x
 
-            window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
+            window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth].copy()
 ##           gt_c = gt_image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
 #             gt_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
             win_h, win_w = window_c.shape[:2]
