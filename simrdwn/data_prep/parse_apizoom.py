@@ -310,8 +310,11 @@ def slice_im_apizoom(input_im, #input_mask,
             # [x0, x1, y0, y1]
 
 
-            # get black and white image
-            window = cv2.cvtColor(window_c, cv2.COLOR_BGR2GRAY)
+            try:
+                # get black and white image
+                window = cv2.cvtColor(window_c, cv2.COLOR_BGR2GRAY)
+            except:
+                continue
 
             # find threshold of image that's not black
             # https://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_imgproc/py_thresholding/py_thresholding.html?highlight=threshold
@@ -347,7 +350,6 @@ def slice_im_apizoom(input_im, #input_mask,
                     ## rectangle overlay worked less well
                     #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
                     dict_overlay[outname_part] = [box[0], box[2], box[1], box[3]]
-                    plt.imshow(window_c)
 
                 elif (((y0 <= box[2] and box[2] <= y0 + sliceHeight) or (y0 <= box[3] and box[3] <= y0 + sliceHeight)) \
                 and (x0 <= box[0] and box[1] <= x0 + sliceHeight)):
@@ -365,7 +367,6 @@ def slice_im_apizoom(input_im, #input_mask,
                     ## rectangle overlay worked less well
                     #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
                     dict_overlay[outname_part] = [box[0], box[2], box[1], box[3]]
-                    plt.imshow(window_c) 
 
 #            box_coords, yolt_coords = gt_boxes_from_xml(window_c)
             yolt_coords = []

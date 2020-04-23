@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath('.'))) # to make imports rela
 import shutil
 import importlib
 
-import parse_cowc
+import parse_apizoom
 import yolt_data_prep_funcs
 
 path_simrdwn_utils = os.getcwd()
@@ -44,13 +44,15 @@ import preprocess_tfrecords
 # path variables (may need to be edited! )
 
 # gpu07
-apizoom_data_dir = '.simrdwn/data/ground_truth_set_apizoom'
+apizoom_data_dir = 'simrdwn/data/ground_truth_set_apizoom/'
 label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
-label_path_root = '/simrdwn/data/train_data'
+label_path_root = '/simrdwn/data/train_data/'
+annotations_path_root = apizoom_data_dir + 'Annotations/'
+train_images_path = apizoom_data_dir + 'train/'
 #folder_name = 'apizoom_SCLD_1500'
 # file_path = '../ApiZoom_SIMRDWN_dataIN/' + folder_name + '/'
 # label_path_root = file_path + 'Annotations/'
@@ -87,7 +89,7 @@ annotation_suffix = '_Annotated.png'
 # infer training output paths
 labels_dir = os.path.join(train_out_dir, 'labels/')
 images_dir = os.path.join(train_out_dir, 'images/')
-im_list_name = os.path.join(train_out_dir, 'apizoom_yolt_train_list.txt')
+im_list_name = os.path.join(train_out_dir, 'apizoom_train_list.txt')
 tfrecord_train = os.path.join(train_out_dir, 'apizoom_train.tfrecord')
 sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
@@ -220,14 +222,15 @@ def get_img_shape(path):
 ##############################
 # Slice large images into smaller chunks
 ##############################
-print(" _name:", im_list_name)
+print("im_list_name:", im_list_name)
 if os.path.exists(im_list_name):
     print('RUN SLICE FALSE')
     run_slice = False
 else:
     run_slice = True
+    print('RUN SLICE TRUE')
     
-df = xml_to_df(label_path_root)
+df = xml_to_df(annotations_path_root)
 print(len(df['filename'].unique()))
 
 df['org_img'] = df['filename'].str.replace(r"_32px.*","")
@@ -243,20 +246,20 @@ train = df[df['filename'].str.contains('test', regex=True)==False]
 data_sets = {'test': test, 'train': train}
 
 for sets, data in data_sets.items():
-    for filename in df.filename.unique():
+    for filename in train.filename.unique():
         print(filename)
-        dtot = images_dir
+        dtot = train_images_path
         cut_file_tot = os.path.join(dtot, filename + '.jpg')
         outroot =  sets + '_' + filename.split('.')[0]
         box_coords = list(df[df['filename'] == filename].apply(lambda row: [row.x1, row.x2, row.y1, row.y2], axis = 1))
-        print(' images_dir: ', images_dir)
-        print(' labels_dir: ', labels_dir)
-#         images_dir = 'test_slicing/'
-#         labels_dir = 'test_slicing/'
-
-        
+        print(' dtot: ', dtot)
+        # print(' cut_file_tot: ', cut_file_tot)
+        # print(' outroot: ', outroot)
+        # print(' labels_dir: ', labels_dir)
+        # print(' images_dir: ', images_dir)
+       
         if run_slice:
-            slice_im_apizoom(
+            parse_apizoom.slice_im_apizoom(
                 cut_file_tot, 
                 outroot, images_dir, labels_dir, yolt_cat_dict, cat_list[0],
                 box_coords,
