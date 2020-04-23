@@ -44,22 +44,19 @@ import preprocess_tfrecords
 # path variables (may need to be edited! )
 
 # gpu07
-cowc_data_dir = './simrdwn/data/ApiZoom_ground_truth'
+apizoom_data_dir = '.simrdwn/data/ground_truth_set_apizoom'
 label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
-#simrdwn_data_dir = '/test_slicing'
 label_path_root = '/simrdwn/data/train_data'
 #folder_name = 'apizoom_SCLD_1500'
 # file_path = '../ApiZoom_SIMRDWN_dataIN/' + folder_name + '/'
 # label_path_root = file_path + 'Annotations/'
 # file_path_images = file_path + 'images/'
-train_out_dir = '/simrdwn/data/train_data/apizoom_416'
-#train_out_dir = '/test_slicing'
-test_out_dir = '/simrdwn/data/test_images/apizoom_416'
-#test_out_dir = '/test_slicing'
+train_out_dir = '/simrdwn/data/train_data/apizoom_416_overlay'
+test_out_dir = '/simrdwn/data/test_images/apizoom_416_overlay'
 
 # at /cosmiqyx                          
 # simrdwn_data_dir = '/cosmiq/src/simrdwn3/data/train_data'
@@ -79,7 +76,9 @@ print ("label_map_path:", label_map_path)
 # list of train and test directories
 # for now skip Columbus and Vahingen since they are grayscale
 # os.path.join(args.cowc_data_dir, 'datasets/ground_truth_sets/')
-ground_truth_dir = cowc_data_dir
+ground_truth_dir = apizoom_data_dir
+train_dirs = ['train']
+test_dirs = ['test']
 test_suffix = 'test'
 annotation_suffix = '_Annotated.png'
 ##############################
@@ -88,17 +87,17 @@ annotation_suffix = '_Annotated.png'
 # infer training output paths
 labels_dir = os.path.join(train_out_dir, 'labels/')
 images_dir = os.path.join(train_out_dir, 'images/')
-im_list_name = os.path.join(train_out_dir, 'apizoom_208_train_list.txt')
-tfrecord_train = os.path.join(train_out_dir, 'apizoom_208_train.tfrecord')
+im_list_name = os.path.join(train_out_dir, 'apizoom_yolt_train_list.txt')
+tfrecord_train = os.path.join(train_out_dir, 'apizoom_train.tfrecord')
 sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
 # train_images_list_file_loc = yolt_dir + 'data/'
 # create output dirs
-# for d in [train_out_dir, test_out_dir, labels_dir, images_dir]:
-#     if not os.path.exists(d):
-#         print("make dir:", d)
-#         os.makedirs(d)
-# ##############################
+for d in [train_out_dir, test_out_dir, labels_dir, images_dir]:
+    if not os.path.exists(d):
+        print("make dir:", d)
+        os.makedirs(d)
+##############################
 
 ##############################
 # set yolt training box size
@@ -221,8 +220,9 @@ def get_img_shape(path):
 ##############################
 # Slice large images into smaller chunks
 ##############################
-print("im_list_name:", im_list_name)
+print(" _name:", im_list_name)
 if os.path.exists(im_list_name):
+    print('RUN SLICE FALSE')
     run_slice = False
 else:
     run_slice = True
@@ -303,19 +303,20 @@ print("Copying", tfrecord_train, "to:", simrdwn_data_dir)
 shutil.copy(tfrecord_train, simrdwn_data_dir)
 
 
-##############################
-# Copy test images to test dir
-print("Copying test images to:", test_out_dir)
-for td in test_dirs:
-    td_tot_in = os.path.join(ground_truth_dir, td)
-    td_tot_out = os.path.join(test_out_dir, td)
-    if not os.path.exists(td_tot_out):
-        os.makedirs(td_tot_out)
-    # copy non-label files
-    for f in os.listdir(td_tot_in):
-        if f.endswith('.png') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
-            shutil.copy2(os.path.join(td_tot_in, f), td_tot_out)
-    # copy everything?
-    #os.system('cp -r ' + td_tot + ' ' + test_out_dir)
-    ##shutil.copytree(td_tot, test_out_dir)
-##############################
+
+# ##############################
+# # Copy test images to test dir
+# print("Copying test images to:", test_out_dir)
+# for td in test_dirs:
+#     td_tot_in = os.path.join(ground_truth_dir, td)
+#     td_tot_out = os.path.join(test_out_dir, td)
+#     if not os.path.exists(td_tot_out):
+#         os.makedirs(td_tot_out)
+#     # copy non-label files
+#     for f in os.listdir(td_tot_in):
+#         if f.endswith('.png') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
+#             shutil.copy2(os.path.join(td_tot_in, f), td_tot_out)
+#     # copy everything?
+#     #os.system('cp -r ' + td_tot + ' ' + test_out_dir)
+#     ##shutil.copytree(td_tot, test_out_dir)
+# ##############################
