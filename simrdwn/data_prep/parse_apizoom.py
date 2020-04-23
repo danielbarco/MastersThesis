@@ -240,9 +240,14 @@ def gt_dic_from_box_coords(box_coords):
 
 
 ###############################################################################
-def slice_im_cowc(input_im, #input_mask, 
-                  outname_root, outdir_im, outdir_label,
-                  classes_dic, category, yolt_box_size,
+###############################################################################
+def slice_im_apizoom(input_im, #input_mask, 
+                     outname_root,
+                     outdir_im, 
+                     outdir_label,
+                      classes_dic, 
+                     category, 
+                     box_coords, 
                   sliceHeight=256, sliceWidth=256,
                   zero_frac_thresh=0.2, overlap=0.2, pad=0, verbose=False,
                   box_coords_dir='', yolt_coords_dir=''):
@@ -252,6 +257,7 @@ def slice_im_cowc(input_im, #input_mask,
     Slice large satellite image into smaller pieces,
     ignore slices with a percentage null greater then zero_fract_thresh'''
 
+    print('############# slice_im_apizoom #############')
     image = cv2.imread(input_im, 1)  # color
     #gt_image = cv2.imread(input_mask, 0)
     category_num = classes_dic[category]
@@ -276,6 +282,7 @@ def slice_im_cowc(input_im, #input_mask,
     dx = int((1. - overlap) * sliceWidth)
     dy = int((1. - overlap) * sliceHeight)
 
+
     for y in range(0, im_h, dy):  # sliceHeight):
         for x in range(0, im_w, dx):  # sliceWidth):
             n_ims += 1
@@ -291,8 +298,17 @@ def slice_im_cowc(input_im, #input_mask,
                 x0 = x
 
             window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
-            #gt_c = gt_image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
+##           gt_c = gt_image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
+#             gt_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
             win_h, win_w = window_c.shape[:2]
+    
+            outname_part = 'slice_' + outname_root + \
+            '_' + str(y0) + '_' + str(x0) + \
+            '_' + str(win_h) + '_' + str(win_w) + \
+            '_' + str(pad)
+    
+            # [x0, x1, y0, y1]
+
 
             # get black and white image
             window = cv2.cvtColor(window_c, cv2.COLOR_BGR2GRAY)
@@ -309,19 +325,60 @@ def slice_im_cowc(input_im, #input_mask,
                 if verbose:
                     print("Zero frac too high at:", zero_frac)
                 continue
+                
+            dict_overlay = {}
+            new_box_coords = []
+            for box in box_coords:
+                if x0 <= box[0] and box[1] <= x0 + sliceHeight and y0 <= box[2] and box[3] <= y0 + sliceHeight:
+                     new_box_coords.append([box[0], box[1] , box[2], box[3]])
+                elif (((x0 <= box[0] and box[0] <= x0 + sliceHeight) or (x0 <= box[1] and box[1] <= x0 + sliceHeight)) \
+                and (y0 <= box[2] and box[3] <= y0 + sliceHeight)) :
 
-            box_coords, yolt_coords = gt_boxes_from_xml(gt_c,
-                                                             yolt_box_size,
-                                                             verbose=verbose)
+                    print('overlayed box on x-axis with circle: ', (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0))
+                    color = np.median(window_c, axis=(0, 1))
+
+                    ## get the center of the Varroa label and then overlay it with a circle of average pixel colour and 
+                    ## take the larger box width / height to get the radius
+                    x = int(round(np.mean([box[0] - x0, box[1] - x0])))
+                    y = int(round(np.mean([box[2] - y0, box[3] - y0])))
+                    radius = int(round(np.max([(box[1] - x0) - (box[0] - x0), (box[3] - y0) - (box[2] - y0)])/2))
+                    cv2.circle(window_c, (x, y), radius, color, thickness= -1)
+
+                    ## rectangle overlay worked less well
+                    #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
+                    dict_overlay[outname_part] = [box[0], box[2], box[1], box[3]]
+                    plt.imshow(window_c)
+
+                elif (((y0 <= box[2] and box[2] <= y0 + sliceHeight) or (y0 <= box[3] and box[3] <= y0 + sliceHeight)) \
+                and (x0 <= box[0] and box[1] <= x0 + sliceHeight)):
+
+                    print('overlayed box on y-axis with circle: ', (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0))
+                    color = np.median(window_c, axis=(0, 1))
+
+                    ## get the center of the Varroa label and then overlay it with a circle of average pixel colour and 
+                    ## take the larger box width / height to get the radius
+                    x = int(round(np.mean([box[0] - x0, box[1] - x0])))
+                    y = int(round(np.mean([box[2] - y0, box[3] - y0])))
+                    radius = int(round(np.max([(box[1] - x0) - (box[0] - x0), (box[3] - y0) - (box[2] - y0)])/2))
+                    cv2.circle(window_c, (x, y), radius, color, thickness= -1)
+
+                    ## rectangle overlay worked less well
+                    #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
+                    dict_overlay[outname_part] = [box[0], box[2], box[1], box[3]]
+                    plt.imshow(window_c) 
+
+#            box_coords, yolt_coords = gt_boxes_from_xml(window_c)
+            yolt_coords = []
+            # Input to convert: image size: (w,h), box: [x0, x1, y0, y1]
+            for box_i in new_box_coords:
+                yolt_co_i = yolt_data_prep_funcs.convert((win_w, win_h), box_i)
+                yolt_coords.append(yolt_co_i)
+
             # continue if no coords
-            if len(box_coords) == 0:
+            if len(new_box_coords) == 0:
                 continue
 
             #  save
-            outname_part = 'slice_' + outname_root + \
-                '_' + str(y0) + '_' + str(x0) + \
-                '_' + str(win_h) + '_' + str(win_w) + \
-                '_' + str(pad)
             outname_im = os.path.join(outdir_im, outname_part + '.png')
             txt_outpath = os.path.join(outdir_label, outname_part + '.txt')
 
@@ -331,7 +388,7 @@ def slice_im_cowc(input_im, #input_mask,
             cv2.imwrite(outname_im, window_c)
 
             # save yolt labels
-            txt_outfile = open(txt_outpath, "w")
+            txt_outfile = open(txt_outpath, "w+")
             if verbose:
                 print("txt output:" + txt_outpath)
             for bb in yolt_coords:

@@ -16,10 +16,20 @@ Data located at:
 
 
 import os
+import glob
 import sys
+import pandas as pd
+import numpy as np
+import xml.etree.ElementTree as ET
+from os import listdir
+from os.path import isfile, join
+import cv2
+from tqdm import tqdm
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+sys.path.insert(0, os.path.dirname(os.path.abspath('.'))) # to make imports relative to project root work
 import shutil
 import importlib
-import numpy as np
 
 import parse_cowc
 import yolt_data_prep_funcs
@@ -29,22 +39,29 @@ path_simrdwn_utils = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.join(path_simrdwn_utils, '..', 'core'))
 import preprocess_tfrecords
 
+
 ###############################################################################
 # path variables (may need to be edited! )
 
 # gpu07
-cowc_data_dir = './simrdwn/data/ground_truth_set_apizoom'
+cowc_data_dir = './simrdwn/data/ApiZoom_ground_truth'
 label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
+#simrdwn_data_dir = '/test_slicing'
 label_path_root = '/simrdwn/data/train_data'
-train_out_dir = '/simrdwn/data/train_data/apizoom_208'
-test_out_dir = '/simrdwn/data/test_images/apizoom_208'
+#folder_name = 'apizoom_SCLD_1500'
+# file_path = '../ApiZoom_SIMRDWN_dataIN/' + folder_name + '/'
+# label_path_root = file_path + 'Annotations/'
+# file_path_images = file_path + 'images/'
+train_out_dir = '/simrdwn/data/train_data/apizoom_416'
+#train_out_dir = '/test_slicing'
+test_out_dir = '/simrdwn/data/test_images/apizoom_416'
+#test_out_dir = '/test_slicing'
 
-
-# at /cosmiqyx                          
+# at /cosmiqyx                          
 # simrdwn_data_dir = '/cosmiq/src/simrdwn3/data/train_data'
 # label_path_root = '/cosmiq/src/simrdwn3/data/train_data'
 # train_out_dir = '/cosmiq/src/simrdwn3/data/train_data/cowc'
@@ -63,8 +80,7 @@ print ("label_map_path:", label_map_path)
 # for now skip Columbus and Vahingen since they are grayscale
 # os.path.join(args.cowc_data_dir, 'datasets/ground_truth_sets/')
 ground_truth_dir = cowc_data_dir
-train_dirs = ['train']
-test_dirs = ['test']
+test_suffix = 'test'
 annotation_suffix = '_Annotated.png'
 ##############################
 
@@ -78,11 +94,11 @@ sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
 # train_images_list_file_loc = yolt_dir + 'data/'
 # create output dirs
-for d in [train_out_dir, test_out_dir, labels_dir, images_dir]:
-    if not os.path.exists(d):
-        print("make dir:", d)
-        os.makedirs(d)
-##############################
+# for d in [train_out_dir, test_out_dir, labels_dir, images_dir]:
+#     if not os.path.exists(d):
+#         print("make dir:", d)
+#         os.makedirs(d)
+# ##############################
 
 ##############################
 # set yolt training box size
@@ -95,13 +111,14 @@ print("yolt_box_size (pixels):", yolt_box_size)
 
 ##############################
 # slicing variables
-slice_overlap = 0.2
+
 zero_frac_thresh = 0.2
-sliceHeight, sliceWidth = 208, 208  # for for 82m windows
+sliceHeight, sliceWidth = 416, 416  # for for 82m windows
+slice_overlap = 32 / sliceHeight
 ##############################
 
-##############################
-# set yolt category params from pbtxt
+#############################
+#set yolt category params from pbtxt
 label_map_dict = preprocess_tfrecords.load_pbtxt(label_map_path, verbose=False)
 print("label_map_dict:", label_map_dict)
 # get ordered keys
@@ -122,6 +139,86 @@ print("convert_dict:", convert_dict)
 
 
 ##############################
+# Get labels from XML
+##############################
+def xml_to_df(path):
+    xml_list = []
+    #for  in glob.glob(path + '/*.xml'):
+    for xml_file in listdir(path):
+        filename, file_extension = os.path.splitext(xml_file)
+        #print(filename)
+        #print(xml_file)
+        if isfile(join(path, xml_file)) and file_extension == ".xml" and not filename.startswith("._"):
+            tree = ET.parse(join(path, xml_file))
+            #print(join(path, xml_file))
+            root = tree.getroot()
+            for member in root.findall('object'):
+                value = (filename,
+                         #int(root.find('size')[0].text),
+                         #int(root.find('size')[1].text),
+
+                         member[0].text,
+                         int(member[2][0].text),
+                         int(member[2][1].text),
+                         int(member[2][2].text),
+                         int(member[2][3].text),
+                         )
+                xml_list.append(value)
+    column_name = ['filename','class', 'x1', 'y1', 'x2', 'y2'] # 'width', 'height',
+    xml_df = pd.DataFrame(xml_list, columns=column_name)
+    return xml_df
+##############################
+
+
+##############################
+# Convert to YOLO
+##############################
+# The following code is the modified version of codes available here: 
+# https://blog.goodaudience.com/part-1-preparing-data-before-training-yolo-v2-and-v3-deepfashion-dataset-3122cd7dd884
+
+def convert_labels(path, x1, y1, x2, y2):
+    """
+    Definition: Parses label files to extract label and bounding box
+        coordinates.  Converts (x1, y1, x1, y2) KITTI format to
+        (x, y, width, height) normalized YOLO format.
+    """
+    def sorting(l1, l2):
+        if l1 > l2:
+            lmax, lmin = l1, l2
+            return lmax, lmin
+        else:
+            lmax, lmin = l2, l1
+            return lmax, lmin
+    size = get_img_shape(path)
+    #print(size)
+    xmax, xmin = sorting(x1, x2)
+    ymax, ymin = sorting(y1, y2)
+    dw = 1./size[1]
+    dh = 1./size[0]
+    x = (xmin + xmax)/2.0
+    y = (ymin + ymax)/2.0
+    w = xmax - xmin
+    h = ymax - ymin
+    x = x*dw
+    w = w*dw
+    y = y*dh
+    h = h*dh
+    return (x,y,w,h)
+
+def get_img_shape(path):
+    #path = 'images/'+path
+    img = cv2.imread(path)
+    try:
+        return img.shape
+    except AttributeError:
+        print('error! ', path)
+        return (None, None, None)
+    
+##############################
+
+
+
+##############################
 # Slice large images into smaller chunks
 ##############################
 print("im_list_name:", im_list_name)
@@ -129,35 +226,44 @@ if os.path.exists(im_list_name):
     run_slice = False
 else:
     run_slice = True
+    
+df = xml_to_df(label_path_root)
+print(len(df['filename'].unique()))
 
-for i, d in enumerate(train_dirs):
-    dtot = os.path.join(ground_truth_dir, d)
-    print("dtot:", dtot)
+df['org_img'] = df['filename'].str.replace(r"_32px.*","")
+df['cut_nr'] = pd.to_numeric(df['filename'].str.replace(r".*(?<=_32px_)", '').str.strip())
+df['path_img_cut'] =  images_dir + df['filename'] + '.jpg'
+df['path_img_org'] =  images_dir + df['org_img'] + '.jpg'
 
-    # get label files
-    files = os.listdir(dtot)
-    annotate_files = [f for f in files if f.endswith(annotation_suffix)]
-    # print ("annotate_files:", annotate_files
+# df['x'], df['y'], df['width'], df['height'] = \
+# zip(*df.apply(lambda row: convert_labels(row['path_img_cut'], row['x1'], row['y1'], row['x2'], row['y2']), axis = 1))
 
-    for annotate_file in annotate_files:
-        annotate_file_tot = os.path.join(dtot, annotate_file)
-        name_root = annotate_file.split(annotation_suffix)[0]
-        imfile = name_root + '.jpg'
-        imfile_tot = os.path.join(dtot, imfile)
-        outroot = d + '_' + imfile.split('.')[0]
-        print("\nName_root", name_root)
-        print("   annotate_file:", annotate_file)
-        print("  imfile:", imfile)
-        print("  imfile_tot:", imfile_tot)
-        print("  outroot:", outroot)
+test = df[df['filename'].str.contains('test', regex=True)==True]
+train = df[df['filename'].str.contains('test', regex=True)==False]
+data_sets = {'test': test, 'train': train}
 
+for sets, data in data_sets.items():
+    for filename in df.filename.unique():
+        print(filename)
+        dtot = images_dir
+        cut_file_tot = os.path.join(dtot, filename + '.jpg')
+        outroot =  sets + '_' + filename.split('.')[0]
+        box_coords = list(df[df['filename'] == filename].apply(lambda row: [row.x1, row.x2, row.y1, row.y2], axis = 1))
+        print(' images_dir: ', images_dir)
+        print(' labels_dir: ', labels_dir)
+#         images_dir = 'test_slicing/'
+#         labels_dir = 'test_slicing/'
+
+        
         if run_slice:
-            parse_cowc.slice_im_cowc(
-                imfile_tot, annotate_file_tot, outroot,
-                images_dir, labels_dir, yolt_cat_dict, cat_list[0],
-                yolt_box_size, sliceHeight=sliceHeight, sliceWidth=sliceWidth,
+            slice_im_apizoom(
+                cut_file_tot, 
+                outroot, images_dir, labels_dir, yolt_cat_dict, cat_list[0],
+                box_coords,
+                sliceHeight=sliceHeight, sliceWidth=sliceWidth,
                 zero_frac_thresh=zero_frac_thresh, overlap=slice_overlap,
-                pad=0, verbose=verbose)
+                pad=0, verbose=verbose) 
+            
 ##############################
 
 ##############################
