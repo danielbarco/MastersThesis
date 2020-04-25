@@ -331,9 +331,15 @@ def slice_im_apizoom(input_im, #input_mask,
                 
             dict_overlay = {}
             new_box_coords = []
+            yolt_coords = []
             for box in box_coords:
                 if x0 <= box[0] and box[1] <= x0 + sliceHeight and y0 <= box[2] and box[3] <= y0 + sliceHeight:
-                     new_box_coords.append([box[0], box[1] , box[2], box[3]])
+                    box = [box[0] - x0, box[1] - x0, box[2] - y0, box[3] - y0]
+                    print('Added box: ', box)
+                    new_box_coords.append(box)
+                    # Input to convert: image size: (w,h), box: [x0, x1, y0, y1]
+                    yolt_co_i = yolt_data_prep_funcs.convert((win_w, win_h), box)
+                    yolt_coords.append(yolt_co_i)
                 elif (((x0 <= box[0] and box[0] <= x0 + sliceHeight) or (x0 <= box[1] and box[1] <= x0 + sliceHeight)) \
                 and (y0 <= box[2] and box[3] <= y0 + sliceHeight)) :
 
@@ -368,12 +374,9 @@ def slice_im_apizoom(input_im, #input_mask,
                     #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
                     dict_overlay[outname_part] = [box[0], box[2], box[1], box[3]]
 
-#            box_coords, yolt_coords = gt_boxes_from_xml(window_c)
-            yolt_coords = []
-            # Input to convert: image size: (w,h), box: [x0, x1, y0, y1]
-            for box_i in new_box_coords:
-                yolt_co_i = yolt_data_prep_funcs.convert((win_w, win_h), box_i)
-                yolt_coords.append(yolt_co_i)
+            #            box_coords, yolt_coords = gt_boxes_from_xml(window_c)
+            new_box_coords = np.array(new_box_coords)
+            yolt_coords = np.array(yolt_coords)
 
             # continue if no coords
             if len(new_box_coords) == 0:
@@ -412,7 +415,13 @@ def slice_im_apizoom(input_im, #input_mask,
                     yolt_coords_dir, outname_part + '_' + category + '.pkl')
                 pickle.dump(yolt_coords, open(outname_pkl, 'wb'), protocol=2)
 
+            
+
             n_ims_nonull += 1
+    if len(dict_overlay) > 0:
+        outname_pkl = os.path.join(
+            dict_overlay, '.pkl')
+        pickle.dump(dict_overlay, open(outname_pkl, 'wb'), protocol=2)
 
     print("Num slices:", n_ims, "Num non-null slices:", n_ims_nonull,
           "sliceHeight", sliceHeight, "sliceWidth", sliceWidth)

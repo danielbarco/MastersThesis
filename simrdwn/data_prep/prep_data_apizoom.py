@@ -307,19 +307,19 @@ shutil.copy(tfrecord_train, simrdwn_data_dir)
 
 
 
-# ##############################
-# # Copy test images to test dir
-# print("Copying test images to:", test_out_dir)
-# for td in test_dirs:
-#     td_tot_in = os.path.join(ground_truth_dir, td)
-#     td_tot_out = os.path.join(test_out_dir, td)
-#     if not os.path.exists(td_tot_out):
-#         os.makedirs(td_tot_out)
-#     # copy non-label files
-#     for f in os.listdir(td_tot_in):
-#         if f.endswith('.png') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
-#             shutil.copy2(os.path.join(td_tot_in, f), td_tot_out)
-#     # copy everything?
-#     #os.system('cp -r ' + td_tot + ' ' + test_out_dir)
-#     ##shutil.copytree(td_tot, test_out_dir)
-# ##############################
+##############################
+# Copy test images to test dir
+print("Copying test images to:", test_out_dir)
+for td in test_dirs:
+    td_tot_in = os.path.join(ground_truth_dir, td)
+    td_tot_out = os.path.join(test_out_dir, td)
+    if not os.path.exists(td_tot_out):
+        os.makedirs(td_tot_out)
+    # copy non-label files
+    for f in os.listdir(td_tot_in):
+        if f.endswith('.png') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
+            shutil.copy2(os.path.join(td_tot_in, f), td_tot_out)
+    # copy everything?
+    #os.system('cp -r ' + td_tot + ' ' + test_out_dir)
+    ##shutil.copytree(td_tot, test_out_dir)
+##############################
