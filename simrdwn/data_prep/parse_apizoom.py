@@ -248,6 +248,7 @@ def slice_im_apizoom(input_im, #input_mask,
                       classes_dic, 
                      category, 
                      box_coords, 
+                     dict_overlay,
                   sliceHeight=256, sliceWidth=256,
                   zero_frac_thresh=0.2, overlap=0.2, pad=0, verbose=False,
                   box_coords_dir='', yolt_coords_dir=''):
@@ -329,7 +330,6 @@ def slice_im_apizoom(input_im, #input_mask,
                     print("Zero frac too high at:", zero_frac)
                 continue
                 
-            dict_overlay = {}
             new_box_coords = []
             yolt_coords = []
             for box in box_coords:
@@ -418,16 +418,13 @@ def slice_im_apizoom(input_im, #input_mask,
             
 
             n_ims_nonull += 1
-    if len(dict_overlay) > 0:
-        outname_pkl = os.path.join(
-            dict_overlay, '.pkl')
-        pickle.dump(dict_overlay, open(outname_pkl, 'wb'), protocol=2)
+    
 
     print("Num slices:", n_ims, "Num non-null slices:", n_ims_nonull,
           "sliceHeight", sliceHeight, "sliceWidth", sliceWidth)
     print("Time to slice", input_im, time.time()-t0, "seconds")
 
-    return
+    return dict_overlay
 
 
 ###############################################################################

@@ -30,6 +30,7 @@ import matplotlib.image as mpimg
 sys.path.insert(0, os.path.dirname(os.path.abspath('.'))) # to make imports relative to project root work
 import shutil
 import importlib
+import pickle
 
 import parse_apizoom
 import yolt_data_prep_funcs
@@ -44,7 +45,7 @@ import preprocess_tfrecords
 # path variables (may need to be edited! )
 
 # gpu07
-apizoom_data_dir = 'simrdwn/data/ground_truth_set_apizoom/'
+apizoom_data_dir = 'simrdwn/data/apizoom_ground_truth/'
 label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
@@ -245,6 +246,8 @@ test = df[df['filename'].str.contains('test', regex=True)==True]
 train = df[df['filename'].str.contains('test', regex=True)==False]
 data_sets = {'test': test, 'train': train}
 
+dict_overlay = {}
+
 for sets, data in data_sets.items():
     for filename in train.filename.unique():
         print(filename)
@@ -262,10 +265,14 @@ for sets, data in data_sets.items():
             parse_apizoom.slice_im_apizoom(
                 cut_file_tot, 
                 outroot, images_dir, labels_dir, yolt_cat_dict, cat_list[0],
-                box_coords,
+                box_coords, dict_overlay,
                 sliceHeight=sliceHeight, sliceWidth=sliceWidth,
                 zero_frac_thresh=zero_frac_thresh, overlap=slice_overlap,
                 pad=0, verbose=verbose) 
+            
+if len(dict_overlay) > 0:
+    outname_pkl = os.path.join(train_out_dir, 'dict_overlay.pkl')
+    pickle.dump(dict_overlay, open(outname_pkl, 'wb'), protocol=2)
             
 ##############################
 
