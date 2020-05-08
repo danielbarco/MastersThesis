@@ -383,7 +383,7 @@ def slice_im_apizoom(input_im, #input_mask,
                 continue
 
             #  save
-            outname_im = os.path.join(outdir_im, outname_part + '.png')
+            outname_im = os.path.join(outdir_im, outname_part + '.jpg')
             txt_outpath = os.path.join(outdir_label, outname_part + '.txt')
 
             # save yolt ims

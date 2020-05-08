@@ -90,8 +90,8 @@ annotation_suffix = '_Annotated.png'
 # infer training output paths
 labels_dir = os.path.join(train_out_dir, 'labels/')
 images_dir = os.path.join(train_out_dir, 'images/')
-im_list_name = os.path.join(train_out_dir, 'apizoom_train_list.txt')
-tfrecord_train = os.path.join(train_out_dir, 'apizoom_train.tfrecord')
+im_list_name = os.path.join(train_out_dir, 'apizoom_416_overlay_train_list.txt')
+tfrecord_train = os.path.join(train_out_dir, 'apizoom_416_overlay_train.tfrecord')
 sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
 # train_images_list_file_loc = yolt_dir + 'data/'
@@ -297,7 +297,7 @@ thickness = 2
 yolt_data_prep_funcs.plot_training_bboxes(
     labels_dir, images_dir, ignore_augment=False,
     sample_label_vis_dir=sample_label_vis_dir,
-    max_plots=max_plots, thickness=thickness, ext='.png')
+    max_plots=max_plots, thickness=thickness, ext='.jpg')
 
 
 ##############################
@@ -324,7 +324,7 @@ for td in test_dirs:
         os.makedirs(td_tot_out)
     # copy non-label files
     for f in os.listdir(td_tot_in):
-        if f.endswith('.png') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
+        if f.endswith('.jpg') and not f.endswith(('_Cars.png', '_Negatives.png', '.xcf')):
             shutil.copy2(os.path.join(td_tot_in, f), td_tot_out)
     # copy everything?
     #os.system('cp -r ' + td_tot + ' ' + test_out_dir)
