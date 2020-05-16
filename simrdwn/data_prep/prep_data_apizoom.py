@@ -114,9 +114,10 @@ print("yolt_box_size (pixels):", yolt_box_size)
 ##############################
 # slicing variables
 
-zero_frac_thresh = 0.2
+
 sliceHeight, sliceWidth = 1500, 1500  # for for 82m windows
-slice_overlap = 32 / sliceHeight
+slice_overlap = (32 / sliceHeight)
+zero_frac_thresh = (32 / sliceHeight)
 ##############################
 
 #############################
@@ -170,54 +171,6 @@ def xml_to_df(path):
     xml_df = pd.DataFrame(xml_list, columns=column_name)
     return xml_df
 ##############################
-
-
-##############################
-# Convert to YOLO
-##############################
-# The following code is the modified version of codes available here: 
-# https://blog.goodaudience.com/part-1-preparing-data-before-training-yolo-v2-and-v3-deepfashion-dataset-3122cd7dd884
-
-def convert_labels(path, x1, y1, x2, y2):
-    """
-    Definition: Parses label files to extract label and bounding box
-        coordinates.  Converts (x1, y1, x1, y2) KITTI format to
-        (x, y, width, height) normalized YOLO format.
-    """
-    def sorting(l1, l2):
-        if l1 > l2:
-            lmax, lmin = l1, l2
-            return lmax, lmin
-        else:
-            lmax, lmin = l2, l1
-            return lmax, lmin
-    size = get_img_shape(path)
-    #print(size)
-    xmax, xmin = sorting(x1, x2)
-    ymax, ymin = sorting(y1, y2)
-    dw = 1./size[1]
-    dh = 1./size[0]
-    x = (xmin + xmax)/2.0
-    y = (ymin + ymax)/2.0
-    w = xmax - xmin
-    h = ymax - ymin
-    x = x*dw
-    w = w*dw
-    y = y*dh
-    h = h*dh
-    return (x,y,w,h)
-
-def get_img_shape(path):
-    #path = 'images/'+path
-    img = cv2.imread(path)
-    try:
-        return img.shape
-    except AttributeError:
-        print('error! ', path)
-        return (None, None, None)
-    
-##############################
-
 
 
 ##############################

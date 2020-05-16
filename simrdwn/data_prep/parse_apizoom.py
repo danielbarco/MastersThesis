@@ -249,8 +249,8 @@ def slice_im_apizoom(input_im, #input_mask,
                      category, 
                      box_coords, 
                      dict_overlay,
-                  sliceHeight=256, sliceWidth=256,
-                  zero_frac_thresh=0.2, overlap=0.2, pad=0, verbose=False,
+                  sliceHeight, sliceWidth,
+                  zero_frac_thresh, overlap, pad, verbose,
                   box_coords_dir='', yolt_coords_dir=''):
     '''
     ADAPTED FROM YOLT/SCRIPTS/SLICE_IM.PY
