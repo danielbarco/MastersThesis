@@ -45,7 +45,7 @@ import preprocess_tfrecords
 # path variables (may need to be edited! )
 
 # gpu07
-apizoom_data_dir = 'simrdwn/data/apizoom_ground_truth/'
+apizoom_data_dir = 'simrdwn/data/apizoom_ground_truth_SCLD/'
 label_map_file = 'class_labels_varroa.pbtxt'
 verbose = True
 
@@ -58,8 +58,8 @@ train_images_path = apizoom_data_dir + 'train/'
 # file_path = '../ApiZoom_SIMRDWN_dataIN/' + folder_name + '/'
 # label_path_root = file_path + 'Annotations/'
 # file_path_images = file_path + 'images/'
-train_out_dir = '/simrdwn/data/train_data/apizoom_416_overlay'
-test_out_dir = '/simrdwn/data/test_images/apizoom_416_overlay'
+train_out_dir = '/simrdwn/data/train_data/apizoom_1500_overlay'
+test_out_dir = '/simrdwn/data/test_images/apizoom_1500_overlay'
 
 # at /cosmiqyx                          
 # simrdwn_data_dir = '/cosmiq/src/simrdwn3/data/train_data'
@@ -90,8 +90,8 @@ annotation_suffix = '_Annotated.png'
 # infer training output paths
 labels_dir = os.path.join(train_out_dir, 'labels/')
 images_dir = os.path.join(train_out_dir, 'images/')
-im_list_name = os.path.join(train_out_dir, 'apizoom_416_overlay_train_list.txt')
-tfrecord_train = os.path.join(train_out_dir, 'apizoom_416_overlay_train.tfrecord')
+im_list_name = os.path.join(train_out_dir, 'apizoom_1500_overlay_train_list.txt')
+tfrecord_train = os.path.join(train_out_dir, 'apizoom_1500_overlay_train.tfrecord')
 sample_label_vis_dir = os.path.join(train_out_dir, 'sample_label_vis/')
 # im_locs_for_list = output_loc + train_name + '/' + 'training_data/images/'
 # train_images_list_file_loc = yolt_dir + 'data/'
@@ -107,7 +107,7 @@ for d in [train_out_dir, test_out_dir, labels_dir, images_dir]:
 car_size = 3      # meters
 GSD = 0.15        # meters
 ##yolt_box_size = np.rint(car_size/GSD)  # size in pixels
-yolt_box_size = 30
+yolt_box_size = 32
 print("yolt_box_size (pixels):", yolt_box_size)
 ##############################
 
@@ -115,7 +115,7 @@ print("yolt_box_size (pixels):", yolt_box_size)
 # slicing variables
 
 zero_frac_thresh = 0.2
-sliceHeight, sliceWidth = 416, 416  # for for 82m windows
+sliceHeight, sliceWidth = 1500, 1500  # for for 82m windows
 slice_overlap = 32 / sliceHeight
 ##############################
 

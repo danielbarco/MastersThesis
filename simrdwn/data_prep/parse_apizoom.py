@@ -485,8 +485,8 @@ def main():
                      verbose=verbose)
 
     # create image list
-    yolt_im_list_loc = os.path.join(args.out_dir, 'cowc_training_list.txt')
-    im_ext = '.png'
+    yolt_im_list_loc = os.path.join(args.out_dir, 'apizoom_1500_training_list.txt')
+    im_ext = '.jpg'
     print("\nsave image list to:", yolt_im_list_loc)
     with open(yolt_im_list_loc, 'w') as file_handler:
         for item in os.listdir(args.image_dir):
