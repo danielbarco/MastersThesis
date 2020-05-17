@@ -245,7 +245,7 @@ def slice_im_apizoom(input_im, #input_mask,
                      outname_root,
                      outdir_im, 
                      outdir_label,
-                      classes_dic, 
+                     classes_dic, 
                      category, 
                      box_coords, 
                      dict_overlay,
@@ -257,6 +257,7 @@ def slice_im_apizoom(input_im, #input_mask,
     Assume input_im is rgb
     Slice large satellite image into smaller pieces,
     ignore slices with a percentage null greater then zero_fract_thresh'''
+    
 
     print('############# slice_im_apizoom #############')
     image = cv2.imread(input_im, 1)  # color
@@ -274,18 +275,25 @@ def slice_im_apizoom(input_im, #input_mask,
     # pad the edge of the image with black pixels
     if pad > 0:
         border_color = (0, 0, 0)
-        image = cv2.copyMakeBorder(image, pad, pad, pad, pad,
+        image = cv2.copyMakeBorder(image, 0, pad, 0, pad,
                                    cv2.BORDER_CONSTANT, value=border_color)
+        print('new image shape: ', image.shape[:2])
+    print('pad: ', pad)
+    im_h, im_w = image.shape[:2]
+    
 
     t0 = time.time()
     n_ims = 0
     n_ims_nonull = 0
     dx = int((1. - overlap) * sliceWidth)
     dy = int((1. - overlap) * sliceHeight)
-
+#     print('input_img: ', input_im)
+    print('dx, dy: ', dx, dy)
+    print('im_w, im_h: ', im_w, im_h)
 
     for y in range(0, im_h, dy):  # sliceHeight):
         for x in range(0, im_w, dx):  # sliceWidth):
+            #print('x, y: ', x, y)
             n_ims += 1
             # extract image
             # make sure we don't go past the edge of the image
@@ -297,6 +305,8 @@ def slice_im_apizoom(input_im, #input_mask,
                 x0 = im_w - sliceWidth
             else:
                 x0 = x
+            print('----  im_w, im_h, dx, dy, x, y, x0, y0: ', im_w, im_h, dx, dy, x, y, x0, y0)
+
 
             window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth].copy()
 ##           gt_c = gt_image[y0:y0 + sliceHeight, x0:x0 + sliceWidth]
@@ -307,10 +317,8 @@ def slice_im_apizoom(input_im, #input_mask,
             '_' + str(y0) + '_' + str(x0) + \
             '_' + str(win_h) + '_' + str(win_w) + \
             '_' + str(pad)
-    
-            # [x0, x1, y0, y1]
-
-
+            
+            
             try:
                 # get black and white image
                 window = cv2.cvtColor(window_c, cv2.COLOR_BGR2GRAY)
@@ -335,7 +343,7 @@ def slice_im_apizoom(input_im, #input_mask,
             for box in box_coords:
                 if x0 <= box[0] and box[1] <= x0 + sliceHeight and y0 <= box[2] and box[3] <= y0 + sliceHeight:
                     box = [box[0] - x0, box[1] - x0, box[2] - y0, box[3] - y0]
-                    print('Added box: ', box)
+                    #print('Added box: ', box)
                     new_box_coords.append(box)
                     # Input to convert: image size: (w,h), box: [x0, x1, y0, y1]
                     yolt_co_i = yolt_data_prep_funcs.convert((win_w, win_h), box)
@@ -343,15 +351,15 @@ def slice_im_apizoom(input_im, #input_mask,
                 elif (((x0 <= box[0] and box[0] <= x0 + sliceHeight) or (x0 <= box[1] and box[1] <= x0 + sliceHeight)) \
                 and (y0 <= box[2] and box[3] <= y0 + sliceHeight)) :
 
-                    print('overlayed box on x-axis with circle: ', (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0))
+                    #print('overlayed box on x-axis with circle: ', (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0))
                     color = np.median(window_c, axis=(0, 1))
-
+                    
                     ## get the center of the Varroa label and then overlay it with a circle of average pixel colour and 
                     ## take the larger box width / height to get the radius
-                    x = int(round(np.mean([box[0] - x0, box[1] - x0])))
-                    y = int(round(np.mean([box[2] - y0, box[3] - y0])))
+                    c_x = int(round(np.mean([box[0] - x0, box[1] - x0])))
+                    c_y = int(round(np.mean([box[2] - y0, box[3] - y0])))
                     radius = int(round(np.max([(box[1] - x0) - (box[0] - x0), (box[3] - y0) - (box[2] - y0)])/2))
-                    cv2.circle(window_c, (x, y), radius, color, thickness= -1)
+                    cv2.circle(window_c, (c_x, c_y), radius, color, thickness= -1)
 
                     ## rectangle overlay worked less well
                     #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
@@ -360,15 +368,15 @@ def slice_im_apizoom(input_im, #input_mask,
                 elif (((y0 <= box[2] and box[2] <= y0 + sliceHeight) or (y0 <= box[3] and box[3] <= y0 + sliceHeight)) \
                 and (x0 <= box[0] and box[1] <= x0 + sliceHeight)):
 
-                    print('overlayed box on y-axis with circle: ', (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0))
+                    #print('overlayed box on y-axis with circle: ', (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0))
                     color = np.median(window_c, axis=(0, 1))
 
                     ## get the center of the Varroa label and then overlay it with a circle of average pixel colour and 
                     ## take the larger box width / height to get the radius
-                    x = int(round(np.mean([box[0] - x0, box[1] - x0])))
-                    y = int(round(np.mean([box[2] - y0, box[3] - y0])))
+                    c_x = int(round(np.mean([box[0] - x0, box[1] - x0])))
+                    c_y = int(round(np.mean([box[2] - y0, box[3] - y0])))
                     radius = int(round(np.max([(box[1] - x0) - (box[0] - x0), (box[3] - y0) - (box[2] - y0)])/2))
-                    cv2.circle(window_c, (x, y), radius, color, thickness= -1)
+                    cv2.circle(window_c, (c_x, c_y), radius, color, thickness= -1)
 
                     ## rectangle overlay worked less well
                     #cv2.rectangle(window_c, (box[0] - x0, box[2] - y0), (box[1] - x0, box[3] -y0), color, -1)
@@ -381,17 +389,15 @@ def slice_im_apizoom(input_im, #input_mask,
             # continue if no coords
             if len(new_box_coords) == 0:
                 continue
-
-            #  save
-            outname_im = os.path.join(outdir_im, outname_part + '.jpg')
-            txt_outpath = os.path.join(outdir_label, outname_part + '.txt')
-
+            
             # save yolt ims
+            outname_im = os.path.join(outdir_im, outname_part + '.jpg')
             if verbose:
                 print("image output:", outname_im)
             cv2.imwrite(outname_im, window_c)
 
             # save yolt labels
+            txt_outpath = os.path.join(outdir_label, outname_part + '.txt')
             txt_outfile = open(txt_outpath, "w+")
             if verbose:
                 print("txt output:" + txt_outpath)

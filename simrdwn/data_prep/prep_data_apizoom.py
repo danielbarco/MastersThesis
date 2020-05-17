@@ -47,7 +47,7 @@ import preprocess_tfrecords
 # gpu07
 apizoom_data_dir = 'simrdwn/data/apizoom_ground_truth_SCLD/'
 label_map_file = 'class_labels_varroa.pbtxt'
-verbose = True
+verbose = False
 
 # at /simrdwn
 simrdwn_data_dir = '/simrdwn/data/train_data'
@@ -59,7 +59,8 @@ train_images_path = apizoom_data_dir + 'train/'
 # label_path_root = file_path + 'Annotations/'
 # file_path_images = file_path + 'images/'
 train_out_dir = '/simrdwn/data/train_data/apizoom_1500_overlay'
-test_out_dir = '/simrdwn/data/test_images/apizoom_1500_overlay'
+test_out_dir = '/simrdwn/data/test_data/apizoom_1500_overlay'
+
 
 # at /cosmiqyx                          
 # simrdwn_data_dir = '/cosmiq/src/simrdwn3/data/train_data'
@@ -116,8 +117,8 @@ print("yolt_box_size (pixels):", yolt_box_size)
 
 
 sliceHeight, sliceWidth = 1500, 1500  # for for 82m windows
-slice_overlap = (32 / sliceHeight)
-zero_frac_thresh = (32 / sliceHeight)
+slice_overlap = 32 / sliceHeight
+zero_frac_thresh = 0.9 # More than 90% black then disregard picture
 ##############################
 
 #############################
@@ -187,10 +188,10 @@ else:
 df = xml_to_df(annotations_path_root)
 print(len(df['filename'].unique()))
 
-df['org_img'] = df['filename'].str.replace(r"_32px.*","")
-df['cut_nr'] = pd.to_numeric(df['filename'].str.replace(r".*(?<=_32px_)", '').str.strip())
-df['path_img_cut'] =  images_dir + df['filename'] + '.jpg'
-df['path_img_org'] =  images_dir + df['org_img'] + '.jpg'
+#df['org_img'] = df['filename'].str.replace(r"_32px.*","")
+#df['cut_nr'] = pd.to_numeric(df['filename'].str.replace(r".*(?<=_32px_)", '').str.strip())
+df['path_img'] =  train_images_path + df['filename'] + '.jpg'
+#df['path_img_org'] =  images_dir + df['org_img'] + '.jpg'
 
 # df['x'], df['y'], df['width'], df['height'] = \
 # zip(*df.apply(lambda row: convert_labels(row['path_img_cut'], row['x1'], row['y1'], row['x2'], row['y2']), axis = 1))
@@ -204,24 +205,45 @@ dict_overlay = {}
 for sets, data in data_sets.items():
     for filename in train.filename.unique():
         print(filename)
-        dtot = train_images_path
-        cut_file_tot = os.path.join(dtot, filename + '.jpg')
-        outroot =  sets + '_' + filename.split('.')[0]
+        input_im = os.path.join(train_images_path, filename + '.jpg')
+        outname_root =  sets + '_' + filename.split('.')[0]
+        outdir_im =  images_dir
+        outdir_label = labels_dir
         box_coords = list(df[df['filename'] == filename].apply(lambda row: [row.x1, row.x2, row.y1, row.y2], axis = 1))
-        print(' dtot: ', dtot)
-        # print(' cut_file_tot: ', cut_file_tot)
-        # print(' outroot: ', outroot)
-        # print(' labels_dir: ', labels_dir)
-        # print(' images_dir: ', images_dir)
+        classes_dic = yolt_cat_dict
+        
+        print(' input_im: ', input_im)
+        print(' outname_root: ', outname_root)
+        print(' outdir_im: ', outdir_im)
+        print(' outdir_label: ', outdir_label)
        
         if run_slice:
             parse_apizoom.slice_im_apizoom(
-                cut_file_tot, 
-                outroot, images_dir, labels_dir, yolt_cat_dict, cat_list[0],
-                box_coords, dict_overlay,
+                input_im, 
+                outname_root,
+                outdir_im, 
+                outdir_label,
+                classes_dic, 
+                cat_list[0],
+                box_coords, 
+                dict_overlay,
                 sliceHeight=sliceHeight, sliceWidth=sliceWidth,
                 zero_frac_thresh=zero_frac_thresh, overlap=slice_overlap,
                 pad=0, verbose=verbose) 
+            
+            # def slice_im_apizoom(
+            #     input_im, #input_mask, 
+            #     outname_root,
+            #     outdir_im, 
+            #     outdir_label,
+            #     classes_dic, 
+            #     category, 
+            #     box_coords, 
+            #     dict_overlay,
+            #     sliceHeight, sliceWidth,
+            #     zero_frac_thresh, overlap, pad, verbose):
+
+    
             
 if len(dict_overlay) > 0:
     outname_pkl = os.path.join(train_out_dir, 'dict_overlay.pkl')
