@@ -386,7 +386,7 @@ def slice_im_apizoom(input_im, #input_mask,
             new_box_coords = np.array(new_box_coords)
             yolt_coords = np.array(yolt_coords)
 
-            # continue if no coords
+            # continue if no coords, so no image or label is saved if there are no coords
             if len(new_box_coords) == 0:
                 continue
             

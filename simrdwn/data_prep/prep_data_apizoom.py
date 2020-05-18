@@ -44,7 +44,7 @@ import preprocess_tfrecords
 # slicing variables
 
 
-sliceHeight, sliceWidth = 832, 832  # for for 82m windows
+sliceHeight, sliceWidth = 416, 416  # for for 82m windows
 slice_overlap = 32 / sliceHeight
 zero_frac_thresh = 0.9 # More than 90% black then disregard picture
 ##############################
@@ -195,52 +195,52 @@ df['path_img'] =  train_images_path + df['filename'] + '.jpg'
 # df['x'], df['y'], df['width'], df['height'] = \
 # zip(*df.apply(lambda row: convert_labels(row['path_img_cut'], row['x1'], row['y1'], row['x2'], row['y2']), axis = 1))
 
-test = df[df['filename'].str.contains('test', regex=True)==True]
+#test = df[df['filename'].str.contains('test', regex=True)==True]
 train = df[df['filename'].str.contains('test', regex=True)==False]
-data_sets = {'test': test, 'train': train}
+#data_sets = {'test': test, 'train': train}
 
 dict_overlay = {}
 
-for sets, data in data_sets.items():
-    for filename in train.filename.unique():
-        print(filename)
-        input_im = os.path.join(train_images_path, filename + '.jpg')
-        outname_root =  sets + '_' + filename.split('.')[0]
-        outdir_im =  images_dir
-        outdir_label = labels_dir
-        box_coords = list(df[df['filename'] == filename].apply(lambda row: [row.x1, row.x2, row.y1, row.y2], axis = 1))
-        classes_dic = yolt_cat_dict
+#for sets, data in data_sets.items():
+for filename in train.filename.unique():
+    print(filename)
+    input_im = os.path.join(train_images_path, filename + '.jpg')
+    outname_root =  'train' + '_' + filename.split('.')[0] # sets +
+    outdir_im =  images_dir
+    outdir_label = labels_dir
+    box_coords = list(df[df['filename'] == filename].apply(lambda row: [row.x1, row.x2, row.y1, row.y2], axis = 1))
+    classes_dic = yolt_cat_dict
+    
+    print(' input_im: ', input_im)
+    print(' outname_root: ', outname_root)
+    print(' outdir_im: ', outdir_im)
+    print(' outdir_label: ', outdir_label)
+
+    if run_slice:
+        parse_apizoom.slice_im_apizoom(
+            input_im, 
+            outname_root,
+            outdir_im, 
+            outdir_label,
+            classes_dic, 
+            cat_list[0],
+            box_coords, 
+            dict_overlay,
+            sliceHeight=sliceHeight, sliceWidth=sliceWidth,
+            zero_frac_thresh=zero_frac_thresh, overlap=slice_overlap,
+            pad=0, verbose=verbose) 
         
-        print(' input_im: ', input_im)
-        print(' outname_root: ', outname_root)
-        print(' outdir_im: ', outdir_im)
-        print(' outdir_label: ', outdir_label)
-       
-        if run_slice:
-            parse_apizoom.slice_im_apizoom(
-                input_im, 
-                outname_root,
-                outdir_im, 
-                outdir_label,
-                classes_dic, 
-                cat_list[0],
-                box_coords, 
-                dict_overlay,
-                sliceHeight=sliceHeight, sliceWidth=sliceWidth,
-                zero_frac_thresh=zero_frac_thresh, overlap=slice_overlap,
-                pad=0, verbose=verbose) 
-            
-            # def slice_im_apizoom(
-            #     input_im, #input_mask, 
-            #     outname_root,
-            #     outdir_im, 
-            #     outdir_label,
-            #     classes_dic, 
-            #     category, 
-            #     box_coords, 
-            #     dict_overlay,
-            #     sliceHeight, sliceWidth,
-            #     zero_frac_thresh, overlap, pad, verbose):
+        # def slice_im_apizoom(
+        #     input_im, #input_mask, 
+        #     outname_root,
+        #     outdir_im, 
+        #     outdir_label,
+        #     classes_dic, 
+        #     category, 
+        #     box_coords, 
+        #     dict_overlay,
+        #     sliceHeight, sliceWidth,
+        #     zero_frac_thresh, overlap, pad, verbose):
 
     
             
