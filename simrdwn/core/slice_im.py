@@ -81,9 +81,9 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
         pad = sliceHeight - win_h
     if sliceWidth > win_w:
         pad = max(pad, sliceWidth - win_w)
-    # pad the edge of the image with black pixels
+    # pad the edge of the image with white pixels
     if pad > 0:
-        border_color = (0, 0, 0)
+        border_color = np.median(image0, axis=(0, 1))
         image0 = cv2.copyMakeBorder(image0, pad, pad, pad, pad,
                                     cv2.BORDER_CONSTANT, value=border_color)
 

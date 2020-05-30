@@ -400,7 +400,7 @@ def compute_performance(ground_truth_boxes, boxes_rect_rot_coords,
         s = min(h, w)
         print("Input image size:", img_mpl.shape)
         border = (0, int(s*0.07), 0, 0)  # (40, 0, 0, 200)
-        border_color = (255, 255, 255)
+        border_color = np.median(img_mpl, axis=(0, 1))
         font = cv2.FONT_HERSHEY_TRIPLEX  # FONT_HERSHEY_SIMPLEX #_SIMPLEX _TRIPLEX
         # font_mult_l sets font_size for different image sizes
         if plot_nums:

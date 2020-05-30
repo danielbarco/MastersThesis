@@ -1428,7 +1428,7 @@ def execute(args, train_cmd1, test_cmd_tot, test_cmd_tot2=''):
         os.system('echo ' + cmd_time_str + ' >> ' + args.log_file)
 
         # export trained model, if using tf object detection api?
-        if 2 < 1 and (args.framework.upper() not in ['YOLT2', 'YOLT3']):
+        if (args.framework.upper() not in ['YOLT2', 'YOLT3']):
             cmd_export_tf = tf_export_model_cmd(
                 args.tf_cfg_train_file_out,
                 tf_cfg_train_file=args.tf_cfg_train_file,
@@ -1939,6 +1939,7 @@ def main():
     args = update_args(args)
     train_cmd1, test_cmd_tot, test_cmd_tot2 = prep(args)
     execute(args, train_cmd1, test_cmd_tot, test_cmd_tot2)
+    
 
 
 ###############################################################################
@@ -1947,6 +1948,9 @@ if __name__ == "__main__":
 
     print("\n\n\nPermit me to introduce myself...\n")
     main()
+    print('Your GPU made me who I am!')
+    #sys.exit()
+    
 
 ###############################################################################
 ###############################################################################

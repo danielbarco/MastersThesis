@@ -274,7 +274,7 @@ def slice_im_apizoom(input_im, #input_mask,
         pad = max(pad, sliceWidth - im_w)
     # pad the edge of the image with black pixels
     if pad > 0:
-        border_color = (0, 0, 0)
+        border_color = np.median(image, axis=(0, 1))
         image = cv2.copyMakeBorder(image, 0, pad, 0, pad,
                                    cv2.BORDER_CONSTANT, value=border_color)
         print('new image shape: ', image.shape[:2])
