@@ -60,12 +60,12 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
         # convert to rgb (cv2 reads in bgr)
         img_cv2 = cv2.imread(image_path, 1)
         # print ("img_cv2.shape:", img_cv2.shape)
-        image0 = cv2.cvtColor(img_cv2, cv2.COLOR_BGR2RGB)
+        image = cv2.cvtColor(img_cv2, cv2.COLOR_BGR2RGB)
     except:
-        image0 = skimage.io.imread(
+        image = skimage.io.imread(
             image_path, as_grey=False).astype(np.uint8)  # [::-1]
         use_cv2 = False
-    print("image.shape:", image0.shape)
+    print("image.shape:", image.shape)
     # image0 = cv2.imread(image_path, 1)  # color
 
     if len(out_ext) == 0:
@@ -73,19 +73,22 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
     else:
         ext = out_ext
 
-    win_h, win_w = image0.shape[:2]
+    im_h, im_w = image.shape[:2]
 
-    # if slice sizes are large than image, pad the edges
-    pad = 0
-    if sliceHeight > win_h:
-        pad = sliceHeight - win_h
-    if sliceWidth > win_w:
-        pad = max(pad, sliceWidth - win_w)
-    # pad the edge of the image with white pixels
+        # if slice sizes are large than image, pad the edges
+    if sliceHeight > im_h:
+        pad = sliceHeight - im_h
+    if sliceWidth > im_w:
+        pad = max(pad, sliceWidth - im_w)
+    # pad the edge of the image with black pixels
     if pad > 0:
-        border_color = np.median(image0, axis=(0, 1))
-        image0 = cv2.copyMakeBorder(image0, pad, pad, pad, pad,
-                                    cv2.BORDER_CONSTANT, value=border_color)
+        border_color = np.median(image, axis=(0, 1))
+        image = cv2.copyMakeBorder(image, 0, pad, 0, pad,
+                                   cv2.BORDER_CONSTANT, value=border_color)
+        print('new image shape: ', image.shape[:2])
+    print('pad: ', pad)
+    # as we have potentially padded the picture remeasure im_h and im_w
+    im_h, im_w = image.shape[:2]
 
     win_size = sliceHeight*sliceWidth
 
@@ -97,25 +100,26 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
 
     # for y0 in xrange(0, image0.shape[0], dy):#sliceHeight):
     #    for x0 in xrange(0, image0.shape[1], dx):#sliceWidth):
-    for y0 in range(0, image0.shape[0], dy):  # sliceHeight):
-        for x0 in range(0, image0.shape[1], dx):  # sliceWidth):
+    for y in range(0, im_h, dy):  # sliceHeight):
+        for x in range(0, im_w, dx):  # sliceWidth):
             n_ims += 1
 
             if (n_ims % 50) == 0:
                 print(n_ims)
 
             # make sure we don't have a tiny image on the edge
-            if y0+sliceHeight > image0.shape[0]:
-                y = image0.shape[0] - sliceHeight
+            if y + sliceHeight > im_h:
+                y0 = im_h - sliceHeight
             else:
-                y = y0
-            if x0+sliceWidth > image0.shape[1]:
-                x = image0.shape[1] - sliceWidth
+                y0 = y
+            if x + sliceWidth > im_w:
+                x0 = im_w - sliceWidth
             else:
-                x = x0
+                x0 = x
+            print('----  im_w, im_h, dx, dy, x, y, x0, y0: ', im_w, im_h, dx, dy, x, y, x0, y0)
 
             # extract image
-            window_c = image0[y:y + sliceHeight, x:x + sliceWidth]
+            window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth].copy()
             # get black and white image
             if use_cv2:
                 window = cv2.cvtColor(window_c, cv2.COLOR_BGR2GRAY)

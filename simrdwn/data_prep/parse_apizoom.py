@@ -279,6 +279,7 @@ def slice_im_apizoom(input_im, #input_mask,
                                    cv2.BORDER_CONSTANT, value=border_color)
         print('new image shape: ', image.shape[:2])
     print('pad: ', pad)
+    # as we have potentially padded the picture remeasure im_h and im_w
     im_h, im_w = image.shape[:2]
     
 
