@@ -75,7 +75,8 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
 
     im_h, im_w = image.shape[:2]
 
-        # if slice sizes are large than image, pad the edges
+    pad = 0
+    # if slice sizes are large than image, pad the edges
     if sliceHeight > im_h:
         pad = sliceHeight - im_h
     if sliceWidth > im_w:
@@ -116,7 +117,7 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
                 x0 = im_w - sliceWidth
             else:
                 x0 = x
-            print('----  im_w, im_h, dx, dy, x, y, x0, y0: ', im_w, im_h, dx, dy, x, y, x0, y0)
+            #print('----  im_w, im_h, dx, dy, x, y, x0, y0: ', im_w, im_h, dx, dy, x, y, x0, y0)
 
             # extract image
             window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth].copy()
@@ -147,7 +148,7 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
                     out_dir,
                     out_name + slice_sep + str(y) + '_' + str(x) + '_'
                     + str(sliceHeight) + '_' + str(sliceWidth)
-                    + '_' + str(pad) + '_' + str(win_w) + '_' + str(win_h)
+                    + '_' + str(pad) + '_' + str(im_w) + '_' + str(im_h)
                     + ext)
 
                 # outpath = os.path.join(out_dir, 'slice_' + out_name + \
