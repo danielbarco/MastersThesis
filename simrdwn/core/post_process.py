@@ -101,7 +101,8 @@ def get_global_coords(row,
 
     # rescale output box size if desired, might want to do this
     #    if the training boxes were the wrong size
-    if test_box_rescale_frac != 1.0:
+    if test_box_rescale_frac != 1.0 or test_box_rescale_frac != 1:
+        print('#### RESCALING ####')
         dl = test_box_rescale_frac
         xmid, ymid = np.mean([xmin, xmax]), np.mean([ymin, ymax])
         dx = dl*(xmax - xmin) / 2
