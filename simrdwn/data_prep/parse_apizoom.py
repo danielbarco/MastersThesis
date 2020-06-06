@@ -278,7 +278,7 @@ def slice_im_apizoom(input_im, #input_mask,
         image = cv2.copyMakeBorder(image, 0, pad, 0, pad,
                                    cv2.BORDER_CONSTANT, value=border_color)
         print('new image shape: ', image.shape[:2])
-    print('pad: ', pad)
+    # print('pad: ', pad)
     # as we have potentially padded the picture remeasure im_h and im_w
     im_h, im_w = image.shape[:2]
     
@@ -289,8 +289,8 @@ def slice_im_apizoom(input_im, #input_mask,
     dx = int((1. - overlap) * sliceWidth)
     dy = int((1. - overlap) * sliceHeight)
 #     print('input_img: ', input_im)
-    print('dx, dy: ', dx, dy)
-    print('im_w, im_h: ', im_w, im_h)
+#    print('dx, dy: ', dx, dy)
+#    print('im_w, im_h: ', im_w, im_h)
 
     for y in range(0, im_h, dy):  # sliceHeight):
         for x in range(0, im_w, dx):  # sliceWidth):
@@ -306,7 +306,7 @@ def slice_im_apizoom(input_im, #input_mask,
                 x0 = im_w - sliceWidth
             else:
                 x0 = x
-            print('----  im_w, im_h, dx, dy, x, y, x0, y0: ', im_w, im_h, dx, dy, x, y, x0, y0)
+            # print('----  im_w, im_h, dx, dy, x, y, x0, y0: ', im_w, im_h, dx, dy, x, y, x0, y0)
 
 
             window_c = image[y0:y0 + sliceHeight, x0:x0 + sliceWidth].copy()

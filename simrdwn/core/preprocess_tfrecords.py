@@ -213,13 +213,15 @@ def yolt_to_tf_example(image_file, label_file,
 
     if len(label_file) > 0:
         # read label file
-        df = pd.read_csv(label_file, sep=' ', names=labelfile_columns)
+        df = pd.read_csv(label_file, sep=' ', names=labelfile_columns, index_col = False)
+        #print(df)
         #data = df.values
 
         # for obj in data['object']:
         for idx, row in df.iterrows():
 
             cat_int, x_frac, y_frac, width_frac, height_frac = row
+            #print(cat_int, x_frac, y_frac, width_frac, height_frac)
             #box = [x_frac, y_frac, width_frac, height_frac]
             # get pixel coords
             [x0, x1, y0, y1] = convert_bbox_yolt_to_tf(height, width, row)

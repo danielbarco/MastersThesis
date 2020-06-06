@@ -146,7 +146,7 @@ def slice_im(image_path, out_name, out_dir, sliceHeight=256, sliceWidth=256,
                 # '_' + str(pad) + ext)
                 outpath = os.path.join(
                     out_dir,
-                    out_name + slice_sep + str(y) + '_' + str(x) + '_'
+                    out_name + slice_sep + str(y0) + '_' + str(x0) + '_'
                     + str(sliceHeight) + '_' + str(sliceWidth)
                     + '_' + str(pad) + '_' + str(im_w) + '_' + str(im_h)
                     + ext)

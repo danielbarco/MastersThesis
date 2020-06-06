@@ -29,7 +29,7 @@ import os
 ###############################################################################
 def get_global_coords(row,
                       edge_buffer_test=0,
-                      max_edge_aspect_ratio=4,
+                      max_edge_aspect_ratio=2,
                       test_box_rescale_frac=1.0,
                       rotate_boxes=False):
     """

@@ -44,7 +44,7 @@ import preprocess_tfrecords
 # slicing variables
 
 
-sliceHeight, sliceWidth = 1088, 1088  # for for 82m windows
+sliceHeight, sliceWidth = 1248, 1248  # for for 82m windows
 slice_overlap = 32 / sliceHeight
 zero_frac_thresh = 0.9 # More than 90% black then disregard picture
 ##############################
