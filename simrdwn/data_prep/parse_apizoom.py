@@ -338,7 +338,8 @@ def slice_im_apizoom(input_im, #input_mask,
                 if verbose:
                     print("Zero frac too high at:", zero_frac)
                 continue
-                
+
+            # Masking/ covering the split and incomplete Varroa bounding boxes with a circle    
             new_box_coords = []
             yolt_coords = []
             for box in box_coords:

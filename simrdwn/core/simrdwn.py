@@ -888,6 +888,7 @@ def split_test_im(im_root_with_ext, testims_dir_tot, results_dir,
 
     # get image root, make sure there is no extension
     im_root = im_root_with_ext.split('.')[0]
+    out_ext = '.' + im_root_with_ext.split('.')[1]
     im_path = os.path.join(testims_dir_tot, im_root_with_ext)
 
     # slice test plot into manageable chunks
@@ -919,7 +920,7 @@ def split_test_im(im_root_with_ext, testims_dir_tot, results_dir,
                               test_split_dir, s, s,
                               zero_frac_thresh=zero_frac_thresh,
                               overlap=slice_overlap,
-                              slice_sep=test_slice_sep)
+                              slice_sep=test_slice_sep, out_ext = out_ext)
             test_files = [os.path.join(test_split_dir, f) for
                           f in os.listdir(test_split_dir)]
         n_files_str = '"Num files: ' + str(len(test_files)) + '\n"'
