@@ -85,14 +85,14 @@ def gt_boxes_from_cowc_png(gt_c, yolt_box_size, verbose=False):
 ###############################################################################
 def cowc_box_coords_to_gdf(box_coords, image_path, category, verbose=False):
     '''Convert box_coords to geodataframe, assume schema:
-        box_coords = [x0, x1, y0, y1]
+        box_coords = [[x0, x1, y0, y1],]
         Adapted from parse_shapefile.py'''
 
     pix_geom_poly_list = []
     for i, b in enumerate(box_coords):
         if verbose and ((i % 100) == 0):
             print("  ", i, "box:", b)
-        [x0, x1, y0, y1] = b
+        [x0, x1, y0, y1] = np.array(b).ravel()
         out_coords = [[x0, y0], [x0, y1], [x1, y1], [x1, y0]]
         points = [shapely.geometry.Point(coord) for coord in out_coords]
         pix_poly = shapely.geometry.Polygon([[p.x, p.y] for p in points])
