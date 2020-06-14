@@ -23,6 +23,7 @@ import tensorflow as tf
 import itertools
 import os
 import sys
+#import tf_warmup
 # from PIL import Image
 
 ######################
@@ -69,6 +70,8 @@ tf.flags.DEFINE_string('inference_graph', None,
                        'Path to the inference graph with embedded weights.')
 tf.flags.DEFINE_boolean('verbose', False, 'Lots o print statements')
 tf.flags.DEFINE_boolean('use_tfrecords', False, 'Switch to use tfrecords')
+# tf.flags.DEFINE_boolean('warmup', False, 'Use warmup before inference')
+# tf.flags.DEFINE_string('warmup_images_path', False, 'Use warmup before inference')
 
 # tfrecords
 tf.flags.DEFINE_string('input_tfrecord_paths', None,
@@ -126,6 +129,7 @@ def main(_):
     if FLAGS.use_tfrecords:
         # if FLAGS.output_tfrecord_path:
         # with tf.Session(config=config) as sess:
+
         with tf.Session() as sess:
 
             input_tfrecord_paths = [
@@ -137,8 +141,8 @@ def main(_):
 
             tf.logging.info('Reading graph and building model...')
             (detected_boxes_tensor, detected_scores_tensor,
-             detected_labels_tensor) = detection_inference.build_inference_graph(
-                 image_tensor, FLAGS.inference_graph)
+                detected_labels_tensor) = detection_inference.build_inference_graph(
+                    image_tensor, FLAGS.inference_graph)
 
             tf.logging.info('Running inference and writing output to {}'.format(
                 FLAGS.output_tfrecord_path))
@@ -150,7 +154,7 @@ def main(_):
                 try:
                     for counter in itertools.count():
                         tf.logging.log_every_n(tf.logging.INFO, 'Processed %d images...', 10,
-                                               counter)
+                                                counter)
 
                         tf_example = detection_inference.infer_detections_and_add_to_example(
                             serialized_example_tensor, detected_boxes_tensor,
@@ -170,6 +174,7 @@ def main(_):
             print("min_thresh:", FLAGS.min_thresh)
         t0 = time.time()
 
+
         # define inference graph
         inference_graph = tf.Graph()
         with inference_graph.as_default():
@@ -184,6 +189,11 @@ def main(_):
             output_columns = ['Loc_Tmp', u'Prob', u'Xmin',
                               u'Ymin', u'Xmax', u'Ymax', u'Category']
             csvwriter.writerow(output_columns)
+
+            # # WARMUP https://www.tensorflow.org/tfx/serving/saved_model_warmup
+            # This section must be completed and tested
+            # if FLAGS.warmup:
+            #     tf_warmup.warmup(warmup_images_path, n_warmup)
 
             # df_data = []
             with inference_graph.as_default():
