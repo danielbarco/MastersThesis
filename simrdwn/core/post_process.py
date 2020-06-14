@@ -101,17 +101,17 @@ def get_global_coords(row,
 
     # rescale output box size if desired, might want to do this
     #    if the training boxes were the wrong size
-    if test_box_rescale_frac != 1.0 or test_box_rescale_frac != 1:
-        print('#### RESCALING ####')
-        dl = test_box_rescale_frac
-        xmid, ymid = np.mean([xmin, xmax]), np.mean([ymin, ymax])
-        dx = dl*(xmax - xmin) / 2
-        dy = dl*(ymax - ymin) / 2
-        x0 = xmid - dx
-        x1 = xmid + dx
-        y0 = ymid - dy
-        y1 = ymid + dy
-        xmin, xmax, ymin, ymax = x0, x1, y0, y1
+    # if test_box_rescale_frac != 1.0:
+    #     print('#### RESCALING ####')
+    #     dl = test_box_rescale_frac
+    #     xmid, ymid = np.mean([xmin, xmax]), np.mean([ymin, ymax])
+    #     dx = dl*(xmax - xmin) / 2
+    #     dy = dl*(ymax - ymin) / 2
+    #     x0 = xmid - dx
+    #     x1 = xmid + dx
+    #     y0 = ymid - dy
+    #     y1 = ymid + dy
+    #     xmin, xmax, ymin, ymax = x0, x1, y0, y1
 
     # rotate boxes, if desird
     if rotate_boxes:
@@ -134,6 +134,7 @@ def get_global_coords(row,
         return
     if (xmax > vis_w) or (ymax > vis_h):
         print("part of bounds > image size:", bounds)
+        print('(xmax > vis_w): ', xmax, vis_w, '(ymax > vis_h): ', ymax, vis_h)
         print(" row:", row)
         return
 
