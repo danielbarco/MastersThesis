@@ -1,4 +1,4 @@
-# TOWARDS A MOBILE DETECTION OF THE VARROA DESTRUCTOR #
+# Varroa Object Detection #
 
 
 ![Alt text](/results/__examples/Varrao_yolt2_832.jpg?raw=true "")
