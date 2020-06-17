@@ -1,0 +1,2511 @@
+
+
+#29.02.2020
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname varroa_1500 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file api_zoom_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+#07.03.2020
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname api_zoom_1500 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0.2 \
+        --slice_sizes_str 0 \
+        --slice_overlap 0.2 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#26.03.2020
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname varroa_416 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file VOC2007_SCLD_416_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname dense_api_zoom \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_416_2020_03_26_16-01-52/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir apizoom_416/test_images  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0.2 \
+        --slice_sizes_str 0 \
+        --slice_overlap 0.2 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#03.04.2020
+
+#Careful this was a quick quick run using the old api_zoom_train_list.txt and excluding bugnon_5a4a06b1a07d567e7d04beda_32px_0.jpg because the dimension are below 416
+#Also I used 34 pixel as bounding box instead of 32
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname varroa_416 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname outname_apizoom_416 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_416_2020_04_04_09-24-33/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir apizoom_416/test_416/  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0.25 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.2 \
+        --alpha_scaling 1 \
+        --show_labels 1
+test_yolt2_dense_api_zoom_2020_04_05_05-29-11
+
+#07.04.2020
+
+#Excluding bugnon_5a4a06b1a07d567e7d04beda_32px_0.jpg because the dimension are below 416
+#Also I used 30 pixel as bounding box instead of 32 Average 29.5
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname varroa_416 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname outname_apizoom_416_v2 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_416_2020_04_07_20-44-10/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir apizoom_416/test_416/  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#09.04.2020
+
+#Excluding bugnon_5a4a06b1a07d567e7d04beda_32px_0.jpg so that the comparison is fair
+
+#Change pic size to 209, change overlap to 0.2 (i.e. 42 pixels) 
+#python /simrdwn/simrdwn/data_prep/prep_data_apizoom.py
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname varroa_208 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_208_train_list.txt \
+     --train_input_width 208 --train_input_height 208 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#23.04.2020
+
+#New code to exclude Excluding bugnon_5a4a06b1a07d567e7d04beda_32px_0.jpg so that the comparison is fair
+#Pic size 416, recoded overlay, change overlap to 32 pixel
+#python /simrdwn/simrdwn/data_prep/prep_data_apizoom.py
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_416_overlay \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+#Did not work
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_23_17-20-23/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+
+#25.04.2020 TRAIN
+
+#New code to exclude Excluding bugnon_5a4a06b1a07d567e7d04beda_32px_0.jpg so that the comparison is fair
+#Pic size 416, recoded overlay, change overlap to 32 pixel
+#python /simrdwn/simrdwn/data_prep/prep_data_apizoom.py
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_416_overlay \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+#26.04.2020 INFERENCE
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_25_16-07-47/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#26.04.2020 INFERENCE
+#Non max suppression never works on the example pictures….
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_25_16-07-47/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test_large_3pics  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#26.04.2020 TRAIN
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_416_overlay \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#27.04.2020 INFERENCE
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_26_08-02-11/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test_large_3pics  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_26_08-02-11/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_26_08-02-11/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0.2 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#26.04.2020 TRAIN
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_416_overlay \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 50000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#27.04.2020 INFERENCE
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_overlay \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_04_27_20-25-41/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir api_zoom/test  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.1 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#FileNotFoundError: [Errno 2] File b'/simrdwn/results/test_yolt2_apizoom_416_overlay_2020_04_29_06-01-05/varroa.txt' does not exist: b'/simrdwn/results/test_yolt2_apizoom_416_overlay_2020_04_29_06-01-05/varroa.txt’   
+
+#Check the Inference code. Is the correct train_model_path defined?
+
+
+#03.05.2020 INFERENCE testing large images
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_thrs_0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1200 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#03.05.2020 INFERENCE testing large images
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_1500_thrsh0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#04.05.2020 INFERENCE testing large images
+
+#looks like the size of the cut also has an influence for the inference
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_1000_thrsh0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1000 \
+        --slice_overlap 0.032 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#04.05.2020 INFERENCE testing large images
+
+#looks like the size of the cut also has an influence for the inference
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_416_thrsh0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.077 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#04.05.2020 INFERENCE testing large images
+
+#looks like the size of the cut also has an influence for the inference
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_1300_thrsh0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1300 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#08.05.2020 TRAIN
+
+#Changed png to jpg
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_416_overlay \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \ # only trained for 10000
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#09.05.2020 INFERENCE testing large images
+
+#looks like the size of the cut also has an influence for the inference
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_416_thrsh0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_05_08_15-14-15/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.077 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#09.05.2020 INFERENCE testing large images
+
+#PNG is way slower PNG 632 vs JPG 248 both divided by 21 test img
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_416_thrsh0 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_overlay_2020_05_08_15-14-15/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.077 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#09.05.2020 TRAIN
+
+#try picture size of 832
+
+python /simrdwn/simrdwn/data_prep/prep_data_apizoom.py
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_832_overlay \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_832_overlay_train_list.txt \
+     --train_input_width 832 --train_input_height 832 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000
+     --batch_size 64 \
+     --subdivisions 16
+
+#11.5.2020
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_416_overlay \
+  --yolt_cfg_file yolov3_544.cfg  \
+  --train_input_width 416 --train_input_height 416 \
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 16
+
+
+#13.05.2020 TRAINING
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_832_overlay \
+  --yolt_cfg_file yolov3_544.cfg  \
+  --train_input_width 832 --train_input_height 832 \
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_832_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 32
+
+#14.05.2020 INFERENCE testing large images
+
+#ERROR not enough Memory CUDA (possibly could wait until paused training docker container is finished)
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname overlay_scaled_832_cut_images \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_832_overlay_2020_05_09_12-53-00/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense2.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1  \
+
+    
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname overlay_scaled_416_cut_images \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_416_overlay_2020_05_11_08-39-19/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname overlay_scaled_832_cut_images \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_832_overlay_2020_05_13_06-21-14/ \
+       --weight_file yolov3_544_15000.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#15.05.2020 INFERENCE testing large images
+#managed only 16.05.2020 (after midnight)
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_1500_scaled_cut \
+     --yolt_cfg_file ave_dense_random1.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_1500_overlay_train_list.txt \
+     --train_input_width 1500 --train_input_height 1500 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 32
+
+#Fixed this error: darknet: ./src/cuda.c:36: check_error: Assertion `0' failed.
+#CUDA Error: an illegal memory access was encountered
+
+#Used RANDOM=1 in cfg file
+
+
+#16.05.2020 TEST
+
+#Comparison of EPFL precut images vs images cut with customised preprocessing
+
+#BATCHES = 10000
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_1500_EPFL_cut \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_1500_custom_cut \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1500_scaled_cut_2020_05_15_22-07-21/ \
+        --weight_file ave_dense_random1_10000_tmp.weights \
+        --yolt_cfg_file ave_dense_random1.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+##### CORRECTED data_prep ########
+
+#17.05.2020 TRAIN
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_1500_scaled_cut_corr \
+     --yolt_cfg_file ave_dense_random1.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_1500_overlay_train_list.txt \
+     --train_input_width 1500 --train_input_height 1500 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 32
+
+#18.05.2020 TEST
+#Did not work as well as EPFL cut. Corrected two further elements (removed test and training set) and changed ivan. to ivan_.
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_1500_custom_cut_corr \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1500_scaled_cut_corr_2020_05_17_13-35-01/ \
+        --weight_file ave_dense_random1_10000_tmp.weights \
+        --yolt_cfg_file ave_dense_random1.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_1500_custom_cut_corr \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1500_scaled_cut_corr_2020_05_17_13-35-01/ \
+        --weight_file ave_dense_random1_10000_tmp.weights \
+        --yolt_cfg_file ave_dense_random1.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 1 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#18.05.2020 TRAIN
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_1500_scaled_cut_corr \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_1500_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+
+#18.05.2020 TEST
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_1500_custom_cut_corr \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1500_scaled_cut_corr_2020_05_18_09-21-27/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#Hurray 🎉🎊 I believe it works !!!! 
+
+#18.05.2020 TRAIN
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_416_scaled_cut_corr \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#19.05.2020 TEST 416 
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_416_custom_cut_corr \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_scaled_cut_corr_2020_05_18_17-20-20/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+
+#19.05.2020 TRAIN
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_416_scaled_cut_corr \
+  --yolt_cfg_file yolov3_544.cfg  \
+  --train_input_width 416 --train_input_height 416 \ 
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_416_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 16 \
+&& python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_832_scaled_cut_corr \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_832_overlay_train_list.txt \
+     --train_input_width 832 --train_input_height 832 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#21.05.2020 TEST yolt3_416 
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_416_scaled_cut_corr \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_416_scaled_cut_corr_2020_05_19_18-38-14/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#21.05.2020 TEST yolt2_1500_EPFL rerun as I kept getting errors concerning .png
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname compare_1500_EPFL_cut \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+
+#21.05.2020 TRAIN
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_544_scaled_cut_corr \
+  --yolt_cfg_file yolov3_544.cfg  \
+  --train_input_width 544 --train_input_height 544 \
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_544_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 16 \
+&& python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_544_scaled_cut_corr \
+     --yolt_cfg_file ave_dense_544.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_544_overlay_train_list.txt \
+     --train_input_width 544 --train_input_height 544 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+#24.05.2020 TEST
+
+#Test the assumption, that the bounding boxes in the test set were to large and therefore some models had difficulties.
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname 1500_EPFL_cut_bb \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_varroa_2020_02_29_23-32-34/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_bb_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname 1500_custom_cut_bb \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1500_scaled_cut_corr_2020_05_18_09-21-27/ \
+        --weight_file ave_dense_10000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_bb_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname 416_bb \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_416_scaled_cut_corr_2020_05_19_18-38-14/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_bb_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname 416_bb \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_scaled_cut_corr_2020_05_18_17-20-20/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_bb_jpg  \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#TEST yolt3 trained on images of 544 x 544
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_544 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_544_scaled_cut_corr_2020_05_21_18-59-12/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 544 \
+        --slice_overlap 0.06 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_544_bb \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_544_scaled_cut_corr_2020_05_21_18-59-12/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_bb_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 544 \
+        --slice_overlap 0.06 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#24.05.2020 TRAIN 
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_544 \
+     --yolt_cfg_file ave_dense_544.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_544_overlay_train_list.txt \
+     --train_input_width 544 --train_input_height 544 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_1088 \
+     --yolt_cfg_file ave_dense_544.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_1088_overlay_train_list.txt \
+     --train_input_width 544 --train_input_height 544 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_1088 \
+     --yolt_cfg_file ave_dense_544.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_1088_overlay_train_list.txt \
+     --train_input_width 1088 --train_input_height 1088 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 10000 \
+     --batch_size 64 \
+     --subdivisions 16
+
+
+
+#24.05.2020 TRAIN SSD
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_544 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_544_overlay_train.tfrecord \
+  --train_input_width 544 --train_input_height 544 \
+  --max_batches 10000 \
+  --batch_size 64
+
+#28.05.2020 TEST SSD
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode test \
+  --outname apizoom_inception_v2 \
+  --train_model_path train_ssd_apizoom_inception_v2_544_2020_05_24_13-21-33 \
+  --testims_dir overlay_resized_bb_jpg \
+  #--test_presliced_tfrecord_part results/test__data_slices_utah_cowc_2019_04_17_01-17-09 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --use_tfrecords 1 \
+  --overwrite_inference_graph 1 \
+  --edge_buffer_test 1 \
+  --n_test_output_plots 4 \
+  --plot_thresh_str 0.0 \
+  --batch_size 4 \
+  --min_retain_prob 0.1 \
+  --show_labels 1 \
+  --alpha_scaling 1
+
+
+#Something did not work as intended for SSD try again:
+#ModuleNotFoundError: No module named ‘object_detection’ -> Run following command from within DOCKER
+#export PYTHONPATH=$PYTHONPATH:/tensorflow/models/research/:/tensorflow/models/research/slim
+
+#28.05.2020 TRAIN SSD
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_544 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_544_overlay_train.tfrecord \
+  --max_batches 10000 \
+  --batch_size 16
+
+#Sanity Check Tensorflow record:
+#Both files the one created here as well as the one created in the preprocessing have the exact same size...
+python simrdwn/simrdwn/core/preprocess_tfrecords.py \
+    --image_list_file /simrdwn/data/train_data/apizoom_544_overlay/apizoom_544_overlay_train_list.txt \
+    --pbtxt_filename /simrdwn/data/train_data/class_labels_varroa.pbtxt \
+    --outfile /simrdwn/data/train_data/apizoom_544_overlay/apizoom_544_overlay_train_list_2.tfrecord \
+    --outfile_val /simrdwn/data/train_data/apizoom_544_overlay/apizoom_544_overlay_train_list_????.tfrecord \
+    --val_frac 0
+
+#29.05.2020 Make a new validation tfrecord
+python simrdwn/simrdwn/core/preprocess_tfrecords.py \
+    --image_list_file /simrdwn/data/train_data/apizoom_544_overlay/apizoom_544_overlay_train_list.txt \
+    --pbtxt_filename /simrdwn/data/train_data/class_labels_varroa.pbtxt \
+    --outfile /simrdwn/data/train_data/apizoom_544_overlay/apizoom_544_overlay_train_090.tfrecord \
+    --outfile_val /simrdwn/data/train_data/apizoom_544_overlay/apizoom_544_overlay_train_010.tfrecord \
+    --val_frac 0.1
+
+#28.05.2020 TRAIN SSD with validation tfrecord
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_544 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_544_overlay/apizoom_544_overlay_train_090.tfrecord \
+  --train_val_tf_record apizoom_544_overlay/apizoom_544_overlay_train_010.tfrecord \
+  --max_batches 10000 \
+  --batch_size 16
+
+#failed again debugging with https://github.com/tensorflow/models/issues/5587
+
+# DEBUGGING
+
+vi /tensorflow/models/research/object_detection/model_main.py
+
+# insert in on line 27:
+tf.logging.set_verbosity(tf.logging.INFO)
+# change line 63 to: 
+    config = tf.estimator.RunConfig(model_dir=FLAGS.model_dir, log_step_count_steps=10)
+
+vi  /tensorflow/models/research/object_detection/model_lib.py
+# Line 845 change to (in vim line 703): 
+
+eval_specs.append(
+    tf.estimator.EvalSpec(
+        name=eval_spec_name,
+        input_fn=eval_input_fn,
+        steps=None,
+        exporters=exporter,
+        throttle_secs=3600))
+
+# once started run:
+export PYTHONPATH=$PYTHONPATH:/tensorflow/models/research/:/tensorflow/models/research/slim
+
+#🎊🎉 It worked I am training 😁👍🐝🐝
+
+#Changed step 0 to step 1 in faster rcnn config file https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10/commit/f0cb960a1dbfdbb3b692733e7eb73bf86dd1d508
+
+TRAIN Faster RCNN Resnet101
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework faster_rcnn \
+  --mode train \
+  --outname apizoom_resnet101_544 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/faster_rcnn_resnet101_simrdwn.config \
+  --train_tf_record apizoom_544_overlay/apizoom_544_overlay_train_090.tfrecord \
+  --train_val_tf_record apizoom_544_overlay/apizoom_544_overlay_train_010.tfrecord \
+  --max_batches 10000 \
+  --batch_size 8
+
+#Error in TESTING tensorflow models from within Docker
+
+# DEBUGGING
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_faster_rcnn_apizoom_resnet101_544_2020_05_29_20-02-38/logs/faster_rcnn_resnet101_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_faster_rcnn_apizoom_resnet101_544_2020_05_29_20-02-38/model.ckpt-10000 \
+    --output_directory=simrdwn/results/train_faster_rcnn_apizoom_resnet101_544_2020_05_29_20-02-38/frozen_model
+
+#30.05.2020 TEST SSD
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_544_2020_05_29_11-15-18 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 1 \
+    --test_box_rescale_frac 1 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+#30.05.2020 TEST Faster RCNN - NO PREDICTIONS
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework faster_rcnn \
+    --mode test \
+    --outname apizoom_resnet101 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_faster_rcnn_apizoom_resnet101_544_2020_05_29_20-02-38 \
+    --tf_cfg_train_file faster_rcnn_resnet101_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 1 \
+    --test_box_rescale_frac 1 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+#Cutting of pictures was not functioning as intended. Some corrections were undertaken, 
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_544_2020_05_29_11-15-18 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 1 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 1 \
+    --test_box_rescale_frac 1 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 1
+
+#30.05.2020 TRAIN YOLT2 544
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_544 \
+     --yolt_cfg_file ave_dense_544.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_544_overlay_train_list.txt \
+     --train_input_width 544 --train_input_height 544 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 32
+
+#01.06.2020 TEST SSD
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_544_2020_05_29_11-15-18 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+
+#01.06.2020 TEST SSD
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_544_2020_05_29_11-15-18 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+#01.06.2020 TEST YOLT2_544
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_544 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_544_2020_05_30_20-59-13/ \
+        --weight_file ave_dense_544_30000_tmp.weights \
+        --yolt_cfg_file ave_dense_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 544 \
+        --slice_overlap 0.06 \
+        --alpha_scaling 1 \
+        --show_labels 1
+ 
+#01.06.2020 TEST YOLT2_544
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_544 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_544_2020_05_30_20-59-13/ \
+        --weight_file ave_dense_544_30000_tmp.weights \
+        --yolt_cfg_file ave_dense_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 544 \
+        --slice_overlap 0.06 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#01.06.2020 TRAIN SSD with validation tfrecord
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_544 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_544_overlay/apizoom_544_overlay_train_090.tfrecord \
+  --train_val_tf_record apizoom_544_overlay/apizoom_544_overlay_train_010.tfrecord \
+  --max_batches 30000 \
+  --batch_size 16
+
+
+#02.06.2020 TEST SSD
+# DEBUGGING
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_544_2020_06_01_21-50-58/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_544_2020_06_01_21-50-58/model/model.ckpt-30000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_544_2020_06_01_21-50-58/frozen_model
+
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_544_2020_06_01_21-50-58 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+#02.06.2020 TRAIN SSD_1500 with validation tfrecord
+
+python simrdwn/simrdwn/core/preprocess_tfrecords.py \
+    --image_list_file /simrdwn/data/train_data/apizoom_1500_EPFL_train_list.txt \
+    --pbtxt_filename /simrdwn/data/train_data/class_labels_varroa.pbtxt \
+    --outfile /simrdwn/data/train_data/apizoom_1500_EPFL_train.tfrecord \
+    --outfile_val /simrdwn/data/train_data/apizoom_1500_EPFL_train_010.tfrecord \
+    --val_frac 0
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_EPFL \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_1500_EPFL_train.tfrecord \
+  --max_batches 30000 \
+  --batch_size 16
+
+# DEBUGGING
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_EPFL_2020_06_02_11-28-26/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_EPFL_2020_06_02_11-28-26/model.ckpt-30000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_EPFL_2020_06_02_11-28-26/frozen_model
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_EPFL_2020_06_02_11-28-26 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 544 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+
+
+#02.06.2020 TRAIN YOLT2 832
+
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_832 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_832_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 32
+
+#02.06.2020 TEST SSD 1500
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_EPFL_2020_06_02_11-28-26 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 1200 \
+    --slice_overlap 0.06 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+#03.06.2020 TEST YOLT2 832
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_832 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_832_2020_06_02_20-27-26/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_832_416 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_832_2020_06_02_20-27-26/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#03.06.2020 TEST YOLT2_544
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_544 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_544_2020_05_30_20-59-13/ \
+        --weight_file ave_dense_544_30000_tmp.weights \
+        --yolt_cfg_file ave_dense_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 544 \
+        --slice_overlap 0.06 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+
+#04.06.2020 TRAIN YOLT2 416_cor 
+#Sanity Check using 
+python simrdwn/simrdwn/core/simrdwn.py \
+     --framework yolt2 \
+     --mode train \
+     --outname apizoom_1248 \
+     --yolt_cfg_file ave_dense.cfg  \
+     --weight_file yolov2.weights \
+     --yolt_train_images_list_file apizoom_1248_overlay_train_list.txt \
+     --train_input_width 416 --train_input_height 416 \
+     --label_map_path class_labels_varroa.pbtxt \
+     --max_batches 30000 \
+     --batch_size 64 \
+     --subdivisions 32
+
+#06.06.2020 TEST YOLT2 1248
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_1248 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1248_2020_06_05_06-20-23/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1248 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#06.06.2020 TRAIN YOLT3_1088
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_1088 \
+  --yolt_cfg_file yolov3_544.cfg  \
+  --train_input_width 1088 --train_input_height 1088 \
+  --boxes_per_grid 9 \
+  --weight_file \
+  --yolt_train_images_list_file apizoom_1088_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 16
+
+#06.06.2020 TEST YOLT3_1088
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_1088 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_1088_2020_06_06_07-10-58/ \
+        --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1088 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#02.06.2020 TRAIN SSD_900 with validation tfrecord
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_900 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_900_overlay_train.tfrecord \
+  --max_batches 30000 \
+  --batch_size 32
+
+#08.06.2020 TEST SSD 900
+# DEBUGGING
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_900_2020_06_08_06-42-41/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_900_2020_06_08_06-42-41/model.ckpt-30000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_900_2020_06_08_06-42-41/frozen_model
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_900_2020_06_08_06-42-41 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 900 \
+    --slice_overlap 0.04 \
+    --alpha_scaling 1 \
+    --show_labels 0
+
+#06.06.2020 TRAIN YOLT3_832
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_832 \
+  --yolt_cfg_file yolov3.cfg  \
+  --train_input_width 416 --train_input_height 416 \
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_832_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 16
+
+#10.06.2020 TEST YOLT3_832
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_832 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_832_2020_06_08_20-50-33/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1
+
+#10.06.2020 TEST YOLT3_832
+#with jpg 78.42763638496399 seconds without 92.44626116752625 seconds ~15 % improvement
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_832 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_832_2020_06_08_20-50-33/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+
+#10.06.2020 TEST YOLT2_1500
+#68.38651371002197 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_1500 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1500_scaled_cut_corr_2020_05_18_09-21-27/ \
+        --weight_file ave_dense_final.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1500 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+
+#10.06.2020 TEST YOLT2_832
+#70.5880515575409 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_832 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_832_2020_06_02_20-27-26/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+
+#10.06.2020 TEST YOLT2_1248
+#66.2182068824768 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_1248 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1248_2020_06_05_06-20-23/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 1 \
+        --test_box_rescale_frac 1 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1248 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+
+#10.06.2020 TRAIN SSD_832
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_832 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_832_overlay_train.tfrecord \
+  --max_batches 30000 \
+  --batch_size 32
+
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_1248 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_1248_overlay_train.tfrecord \
+  --max_batches 30000 \
+  --batch_size 32
+
+#SIMRDWN evaluation script did not work.
+python simrdwn/simrdwn/core/simrdwn_eval_apizoom.py \
+    --prediction_dir_part test_yolt2_apizoom_1248_2020_06_06_06-44-50\
+    --out_dir eval_test_yolt2_apizoom_1248_2020_06_06_06-44-50
+
+#12.06.19 SSD_1248
+#74.79384589195251 seconds
+# DEBUGGING
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_1248_2020_06_11_17-43-51/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_1248_2020_06_11_17-43-51/model.ckpt-30000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_1248_2020_06_11_17-43-51/frozen_model
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_1248 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_1248_2020_06_11_17-43-51 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 1248 \
+    --slice_overlap 0.03 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#SSD_832
+#82.26254677772522 seconds
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_832_2020_06_11_08-42-02/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_832_2020_06_11_08-42-02/model.ckpt-30000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_832_2020_06_11_08-42-02/frozen_model
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_832 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_832_2020_06_11_08-42-02 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 832 \
+    --slice_overlap 0.04 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#SSD_900
+#81.00076818466187 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_900 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_900_2020_06_08_06-42-41 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 900 \
+    --slice_overlap 0.04 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#12.06.2020 TRAIN YOLT3_1248
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_1248 \
+  --yolt_cfg_file yolov3.cfg  \
+  --train_input_width 416 --train_input_height 416 \
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_1248_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 64 \
+  --subdivisions 16
+
+#14.06.2020 TEST SSD_832
+#82.78666710853577
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_832 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_832_2020_06_11_08-42-02 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 0 \
+    --max_edge_aspect_ratio 0 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 832 \
+    --slice_overlap 0.04 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#14.06.19 TEST SSD_1248
+#74.90276885032654 seconds
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_1248 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_1248_2020_06_11_17-43-51 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 0 \
+    --max_edge_aspect_ratio 0 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 1248 \
+    --slice_overlap 0.03 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+
+#14.06.2020 TRAIN SSD_416
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_416 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_416_overlay_train.tfrecord \
+  --max_batches 30000 \
+  --batch_size 32
+
+#14.06.2020 TEST YOLT2_832 FILTER
+#69.58524799346924 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_832_f \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_832_2020_06_02_20-27-26/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 10 \
+        --test_box_rescale_frac 2 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+#14.06.2020 TEST YOLT2_1248 FILTER
+#66.08974361419678 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_1248_f \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_1248_2020_06_05_06-20-23/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 10 \
+        --test_box_rescale_frac 2 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1248 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+#14.06.2020 TEST YOLT2_416 FILTER
+#116.23067545890808 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416_f \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_scaled_cut_corr_2020_05_18_17-20-20/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 10 \
+        --test_box_rescale_frac 2 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+#14.06.2020 TEST yolt3_416 FILTER
+#164.18874406814575 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_416_f \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_416_scaled_cut_corr_2020_05_19_18-38-14/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 10 \
+        --test_box_rescale_frac 2 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+
+#14.06.2020 TEST YOLT3_832 FILTER
+#78.4465126991272 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_832_f \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_832_2020_06_08_20-50-33/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 10 \
+        --test_box_rescale_frac 2 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1\
+        --n_test_output_plots 0
+
+#14.06.2020 TEST YOLT3_1248 FILTER
+#70.2317259311676 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_1248_f \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_1248_2020_06_12_08-00-04/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 10 \
+        --test_box_rescale_frac 2 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1248 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1\
+        --n_test_output_plots 0
+
+#14.06.2020 TEST SSD_416
+#353.85593485832214 seconds
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_416_2020_06_14_04-59-03/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_416_2020_06_14_04-59-03/model.ckpt-30000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_416_2020_06_14_04-59-03/frozen_model
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_416 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_416_2020_06_14_04-59-03 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 0 \
+    --max_edge_aspect_ratio 0 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 416 \
+    --slice_overlap 0.03 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#14.06.2020 TEST SSD_416 FILTER
+#259.2139768600464 seconds
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_416_f \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_416_2020_06_14_04-59-03 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 10 \
+    --max_edge_aspect_ratio 2 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 416 \
+    --slice_overlap 0.03 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#14.06.2020 TRAIN YOLT3_832
+#I need to verify the train_input size makes no difference to the result
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework yolt3 \
+  --mode train \
+  --outname apizoom_832 \
+  --yolt_cfg_file yolov3.cfg  \
+  --train_input_width 832 --train_input_height 832 \
+  --boxes_per_grid 9 \
+  --weight_file yolov3.weights \
+  --yolt_train_images_list_file apizoom_1248_overlay_train_list.txt \
+  --label_map_path class_labels_varroa.pbtxt \
+  --max_batches 30000 \
+  --batch_size 32 \
+  --subdivisions 16
+
+#15.06.2020 TEST YOLT3_832 
+
+ python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_832 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_832_2020_06_14_16-19-39/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 0 \
+        --test_box_rescale_frac 0 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1\
+        --n_test_output_plots 0
+
+#15.06.2020 TEST YOLT3_1248 
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_1248 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_1248_2020_06_12_08-00-04/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 0 \
+        --test_box_rescale_frac 0 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 1248 \
+        --slice_overlap 0.03 \
+        --alpha_scaling 1 \
+        --show_labels 1\
+        --n_test_output_plots 0
+
+
+#14.06.2020 TEST YOLT3_832
+
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_832 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_832_2020_06_14_16-19-39/ \
+        --weight_file yolov3_final.weights \
+        --yolt_cfg_file yolov3.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 0 \
+        --test_box_rescale_frac 0 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 832 \
+        --slice_overlap 0.04 \
+        --alpha_scaling 1 \
+        --show_labels 1\
+        --n_test_output_plots 0
+
+#14.06.2020 TEST yolt3_416
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt3 \
+        --mode test \
+        --outname apizoom_416 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt3_apizoom_416_scaled_cut_corr_2020_05_19_18-38-14/ \
+       --weight_file yolov3_544_final.weights \
+        --yolt_cfg_file yolov3_544.cfg \
+        --testims_dir overlay_resized_jpg \
+        --boxes_per_grid 9 \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 0 \
+        --test_box_rescale_frac 0\
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+
+#15.06.2020 TEST YOLT2_416 FILTER
+python simrdwn/simrdwn/core/simrdwn.py \
+        --framework yolt2 \
+        --mode test \
+        --outname apizoom_416 \
+        --label_map_path class_labels_varroa.pbtxt \
+        --train_model_path train_yolt2_apizoom_416_scaled_cut_corr_2020_05_18_17-20-20/ \
+        --weight_file ave_dense_30000_tmp.weights \
+        --yolt_cfg_file ave_dense.cfg \
+        --testims_dir overlay_resized_jpg \
+        --keep_test_slices 0 \
+        --test_slice_sep __ \
+        --test_make_legend_and_title 0 \
+        --edge_buffer_test 0 \
+        --test_box_rescale_frac 0 \
+        --plot_thresh_str 0 \
+        --slice_sizes_str 416 \
+        --slice_overlap 0.08 \
+        --alpha_scaling 1 \
+        --show_labels 1 \
+        --n_test_output_plots 0
+
+#15.06.2020 TRAIN SSD_832_60
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_inception_v2_832_60 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_inception_v2_simrdwn.config \
+  --train_tf_record apizoom_832_overlay_train.tfrecord \
+  --max_batches 60000 \
+  --batch_size 32
+
+#16.06.2020 SSD_832
+python /tensorflow/models/research/object_detection/export_inference_graph.py \
+    --input_type image_tensor \
+    --pipeline_config_path=simrdwn/results/train_ssd_apizoom_inception_v2_832_60_2020_06_15_16-08-19/logs/ssd_inception_v2_simrdwn.config \
+    --trained_checkpoint_prefix=simrdwn/results/train_ssd_apizoom_inception_v2_832_60_2020_06_15_16-08-19/model.ckpt-60000 \
+    --output_directory=simrdwn/results/train_ssd_apizoom_inception_v2_832_60_2020_06_15_16-08-19/frozen_model
+
+
+python simrdwn/simrdwn/core/simrdwn.py \
+    --framework ssd \
+    --mode test \
+    --outname apizoom_inception_v2_832 \
+    --label_map_path class_labels_varroa.pbtxt \
+    --train_model_path train_ssd_apizoom_inception_v2_832_60_2020_06_15_16-08-19 \
+    --tf_cfg_train_file ssd_inception_v2_simrdwn.config \
+    --use_tfrecords=0 \
+    --testims_dir overlay_resized_jpg  \
+    --keep_test_slices 0 \
+    --test_slice_sep __ \
+    --test_make_legend_and_title 0 \
+    --edge_buffer_test 0 \
+    --max_edge_aspect_ratio 0 \
+    --plot_thresh_str 0.0 \
+    --slice_sizes_str 832 \
+    --slice_overlap 0.04 \
+    --alpha_scaling 1 \
+    --show_labels 0 \
+    --n_test_output_plots 0
+
+#16.06.2020 TRAIN SSD_832
+python simrdwn/simrdwn/core/simrdwn.py \
+  --framework ssd \
+  --mode train \
+  --outname apizoom_mobilenet_v2_832 \
+  --label_map_path class_labels_varroa.pbtxt \
+  --tf_cfg_train_file _altered_v0/ssd_mobilenet_v1_simrdwn.config\
+  --train_tf_record apizoom_832_overlay_train.tfrecord \
+  --max_batches 60000 \
+  --batch_size 32
+
+
+
+
+
