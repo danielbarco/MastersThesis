@@ -1,7 +1,21 @@
-# SIMRDWN #
+# Towards a mobile Detection of the Varroa Destructor #
 
 
-![Alt text](/results/__examples/header.jpg?raw=true "")
+![Alt text](Varrao_yolt2_832.jpg?raw=true "")
+
+
+
+
+This repository was elaborated for the master's thesis *Towards a mobile Detection of the Varroa Destructor* as part of the MSc in Applied Information and Data Science submitted June 19, 2020. It is based on the ![SIMRDWN repository](https://github.com/avanetten/simrdwn).
+
+- All figures shown in the master's thesis and more were created with the following evaluation jupyter notebook: *documentation/20200611_Evaluation_multiple_models.ipynb*
+- The SIMRDWN protocoll contains all the tests conducted during the master's thesis *documentation/SIMRDWN_protocol.txt*
+- The master's thesis protocoll can be found ![here](https://docs.google.com/spreadsheets/d/1NhlGIajVtLvL9PySZ6wev_GOEyXtCpmQAyen9tnO338/edit?usp=sharing).
+
+
+### The description below was copied from the ![SIMRDWN repository](https://github.com/avanetten/simrdwn):
+
+
 
 The Satellite Imagery Multiscale Rapid Detection with Windowed Networks (SIMRDWN) codebase combines some of the leading object detection algorithms into a unified framework designed to detect objects both large and small in overhead imagery.  This work seeks to extend the [YOLT](https://arxiv.org/abs/1805.09512) modification of [YOLO](https://pjreddie.com/darknet/yolo/) to include the [TensorFlow Object Detection API](https://github.com/tensorflow/models/tree/master/research/object_detection).  Therefore, one can train models and test on arbitrary image sizes with [YOLO (versions 2 and 3)](https://pjreddie.com/darknet/yolo/), [Faster R-CNN](https://arxiv.org/abs/1506.01497), [SSD](https://arxiv.org/abs/1512.02325), or [R-FCN](https://arxiv.org/abs/1605.06409).  
 
