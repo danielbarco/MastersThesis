@@ -6,12 +6,14 @@
 
 
 
-This repository was elaborated for the master's thesis *Towards a mobile Detection of the Varroa Destructor* as part of the MSc in Applied Information and Data Science submitted June 19, 2020. It is based on the ![SIMRDWN repository](https://github.com/avanetten/simrdwn).
+### This repository was elaborated for the master's thesis *Towards a mobile Detection of the Varroa Destructor* as part of the MSc in Applied Information and Data Science submitted June 19, 2020. It is based on the ![SIMRDWN repository](https://github.com/avanetten/simrdwn).
 
 - All figures shown in the master's thesis and more were created with the following evaluation jupyter notebook: *documentation/20200611_Evaluation_multiple_models.ipynb*
 - The SIMRDWN protocoll contains all the tests conducted during the master's thesis *documentation/SIMRDWN_protocol.txt*
 - The master's thesis protocoll can be found ![here](https://docs.google.com/spreadsheets/d/1NhlGIajVtLvL9PySZ6wev_GOEyXtCpmQAyen9tnO338/edit?usp=sharing).
-
+  
+  
+  
 
 ### The description below was copied from the ![SIMRDWN repository](https://github.com/avanetten/simrdwn):
 
@@ -176,8 +178,7 @@ During the test phase, input images of arbitrary size are processed.
 			--show_labels 1
 	
 	Outputs will be something akin to the images below.  The _alpha\_scaling_ flag makes the bounding box opacity proportional to prediction confidence, and the _show\_labels_ flag prints the object class at the top of the bounding box.
-	![Alt text](/results/__examples/ex0.png?raw=true "Figure 1")
-	![Alt text](/results/__examples/ex1.png?raw=true "Figure 2")
+
 	
 	
 	
