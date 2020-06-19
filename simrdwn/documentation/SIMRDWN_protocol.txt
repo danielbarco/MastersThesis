@@ -1,4 +1,9 @@
-
+##################
+#
+# The following protocol documents tests run on the SIMRDWN framework 
+# Master's Thesis: Towards a mobile Detection of the Varroa Destructor
+#
+##################
 
 #29.02.2020
 python simrdwn/simrdwn/core/simrdwn.py \
