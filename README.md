@@ -6,7 +6,7 @@
 
 
 
-### This repository was elaborated for the master's thesis *Towards a mobile Detection of the Varroa Destructor* as part of the MSc in Applied Information and Data Science submitted June 19, 2020. It is based on the ![SIMRDWN repository](https://github.com/avanetten/simrdwn).
+### This repository was elaborated during the master's thesis *Towards a mobile Detection of the Varroa Destructor* as part of the MSc in Applied Information and Data Science submitted June 19, 2020. It is based on the ![SIMRDWN repository](https://github.com/avanetten/simrdwn).
 
 - All figures shown in the master's thesis and more were created with the following evaluation jupyter notebook: *documentation/20200611_Evaluation_multiple_models.ipynb*
 - The SIMRDWN protocoll contains all the tests conducted during the master's thesis *documentation/SIMRDWN_protocol.txt*
